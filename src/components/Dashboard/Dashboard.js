@@ -11,7 +11,7 @@ class Dashboard extends Component {
      render() {
 
           const { match } = this.props;
-
+          console.log(match.path);
           return (
                <div className="dash-container">
                     Dashboard

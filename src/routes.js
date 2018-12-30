@@ -21,7 +21,7 @@ export default (
           <Route path="/dash/map" component={Dashboard} />
           <Route path="/dash" component={Dashboard} />
           <Route path="/adventure/add" component={AddAdventure} />
-          <Route path="/adventure/edit/:id" component={AddAdventure} exact />
-          <Route path="/adventure/:id" component={Adventure} exact />
+          <Route path="/adventure/edit/:id" component={AddAdventure} />
+          <Route path="/adventure/:id" component={Adventure} />
      </Switch>
 )
