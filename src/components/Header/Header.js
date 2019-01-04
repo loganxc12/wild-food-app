@@ -9,6 +9,7 @@ export default function Header(props) {
                </div>
                <div className="nav">
                     <NavLink to="/dash">Dashboard</NavLink>
+                    <NavLink to="/login">Login</NavLink>
                </div>
           </div>
      );
