@@ -14,7 +14,7 @@ class App extends Component {
      }
 
      componentDidMount() {
-          axios.get("/api/user-data").then(response => {
+          axios.get("/auth/user-data").then(response => {
                this.setState({ user: response.data.user || null });
           });
      }

@@ -21,6 +21,8 @@ app.use(session({
 }));
 
 app.get("/auth/callback", authController.login);
+app.get("/auth/user-data", authController.getUser);
+
 
 const PORT = 4000;
 app.listen(PORT, console.log(`Server listening on port ${PORT}`));
