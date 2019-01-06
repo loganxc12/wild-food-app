@@ -20,8 +20,12 @@ app.use(session({
      resave: false,
 }));
 
-app.get("/auth/callback", authController.login);
-app.get("/auth/user-data", authController.getUser);
+//AUTH0 LOGIN/SIGN UP FUNCTIONALITY
+app.get("/auth/callback", authController.login); 
+//RETREIVES USER FROM SESSION
+app.get("/auth/user-data", authController.getUser); 
+//KILLS SESSION
+app.post("/auth/logout", authController.logout);
 
 
 const PORT = 4000;

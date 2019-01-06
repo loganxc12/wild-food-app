@@ -18,17 +18,14 @@ module.exports = {
 
           //RECIEVE ACCESS TOKEN AND SEND BACK TO AUTH0 TO GET USER INFO.
           function tradeAccessTokenForUserInfo(accessTokenResponse) {
-               console.log("accessTokenResponse", accessTokenResponse.data);
                const accessToken = accessTokenResponse.data.access_token;
                return axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo?access_token=${accessToken}`)
           }
           //RECIEVE USER INFO AND CHECK FOR MATCH IN DB. IF FOUND, SET USER TO SESSION, IF NOT
           //FOUND, CREATE NEW USER IN DB AND SET TO SESSION. 
           function storeUserInfoInDatabase(userInfoResponse) {
-               console.log("user info", userInfoResponse.data);
                const user = userInfoResponse.data;
                return req.app.get("db").find_user_by_auth0_id([user.sub]).then(users => {
-                    console.log("--------users", users);
                     if (users.length) {
                          req.session.user = {
                               auth0_id: users[0].auth0id,
@@ -36,7 +33,6 @@ module.exports = {
                               picture: users[0].picture,
                               email: users[0].email
                          };
-                         console.log("-------req.session", req.session);
                          res.redirect("/dash");
                     } else {
                          return req.app.get("db").create_user([
@@ -62,8 +58,15 @@ module.exports = {
 
      },
 
+     //RETRIEVES USER FROM SESSION AND SENDS BACK 
      getUser: (req, res) => {
           res.json({ user: req.session.user });
+     },
+
+     //KILLS SESSION
+     logout: (req, res) => {
+          req.session.destroy();
+          res.send();
      }
 
 }
