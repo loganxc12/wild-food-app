@@ -13,6 +13,17 @@ module.exports = {
                     res.status(500).send({errorMessage: "Error in postAdventure method"});
                     console.log(error);
                })
+     },
+
+     readAdventures: (req, res) => {
+          const dbInstance = req.app.get("db");
+          const { id } = req.session.user;
+          dbInstance.read_adventures([ id ]) 
+               .then(adventures => res.status(200).send(adventures) )
+               .catch(error => {
+                    res.status(500).send({errorMessage: "Error in readAdventures method"});
+                    console.log(error);
+               })
      }
 
 

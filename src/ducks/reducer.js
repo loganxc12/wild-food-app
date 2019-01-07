@@ -1,6 +1,7 @@
 //INITIAL STATE OBJECT
 const INITIAL_STATE = {
-     user: null
+     user: null,
+     adventures: []
 }
 
 //REDUCER
@@ -20,6 +21,7 @@ function reducer(state = INITIAL_STATE, action) {
 
 //ACTION TYPES
 const UPDATE_USER_DATA = "UPDATE_USER_DATA";
+const UPDATE_ADVENTURES = "UPDATE_ADVENTURES";
 
 //ACTION CREATORS
 export function updateUserData(userData) {
@@ -28,5 +30,9 @@ export function updateUserData(userData) {
           payload: userData
      }
 }
+
+// export function updateAdventures(adventures) {
+
+// }
 
 export default reducer;

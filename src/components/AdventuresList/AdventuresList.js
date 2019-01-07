@@ -14,7 +14,7 @@ class AdventuresList extends Component {
 
      getAdventuresFromServer() {
           axios.get("/api/adventures").then(adventures => {
-
+               console.log(adventures);
           })
      }
 
