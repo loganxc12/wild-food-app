@@ -28,6 +28,7 @@ module.exports = {
                return req.app.get("db").find_user_by_auth0_id([user.sub]).then(users => {
                     if (users.length) {
                          req.session.user = {
+                              id: users[0].id,
                               auth0_id: users[0].auth0id,
                               profile_name: users[0].name,
                               picture: users[0].picture,

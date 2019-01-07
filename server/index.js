@@ -26,6 +26,8 @@ app.get("/auth/callback", authController.login);
 app.get("/auth/user-data", authController.getUser); 
 //KILLS SESSION
 app.post("/auth/logout", authController.logout);
+//POSTING NEW ADVENTURE 
+app.post("/api/adventures", controller.postAdventure);
 
 
 const PORT = 4000;
