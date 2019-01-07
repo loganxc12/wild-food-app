@@ -13,6 +13,7 @@ class AddAdventure extends Component {
                redirect: false
           }
           this.handleInputChange = this.handleInputChange.bind(this);
+          this.toggleRedirect = this.toggleRedirect.bind(this);
           this.postAdventureToServer = this.postAdventureToServer.bind(this);
      }
 
@@ -20,6 +21,10 @@ class AddAdventure extends Component {
           this.setState({
                [e.target.name] : e.target.value
           })
+     }
+
+     toggleRedirect() {
+          this.setState({ redirect: true })
      }
 
      postAdventureToServer() {
@@ -44,6 +49,7 @@ class AddAdventure extends Component {
                          <input onChange={this.handleInputChange} name="location" placeholder="Location"></input>
                          <input onChange={this.handleInputChange} name="description" placeholder="Description"></input>
                          <button onClick={this.postAdventureToServer}>Save</button>
+                         <button onClick={this.toggleRedirect}>Cancel</button>
                     </div>
                </div>
           );

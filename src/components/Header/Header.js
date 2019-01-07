@@ -26,6 +26,7 @@ class Header extends Component {
 
      render() {
           const { user } = this.props;
+          
           return (
                <div className="header">
                     <div className="logo">
@@ -35,7 +36,7 @@ class Header extends Component {
                          <NavLink to="/dash">Dashboard</NavLink>
                          {
                          user ?
-                         <button onClick={this.logout}>Logout</button>
+                         <Link to="/"><button onClick={this.logout}>Logout</button></Link>
                        : <NavLink to="/login">Login</NavLink>
                          }
                          { user && <img src={user.picture} /> }

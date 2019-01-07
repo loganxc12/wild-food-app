@@ -16,6 +16,7 @@ module.exports = {
      },
 
      readAdventures: (req, res) => {
+          if (!req.session.user) { res.send(); }
           const dbInstance = req.app.get("db");
           const { id } = req.session.user;
           dbInstance.read_adventures([ id ]) 
