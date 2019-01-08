@@ -1,7 +1,8 @@
 //INITIAL STATE OBJECT
 const INITIAL_STATE = {
      user: null,
-     adventures: []
+     adventures: [],
+     showAddSpeciesModal: false
 }
 
 //REDUCER
@@ -15,6 +16,9 @@ function reducer(state = INITIAL_STATE, action) {
 
           case UPDATE_ADVENTURES: 
                return Object.assign( {}, state, {adventures: action.payload} );
+          
+          case TOGGLE_ADD_SPECIES_MODAL: 
+               return Object.assign( {}, state, {showAddSpeciesModal: action.payload} );
 
           default: return state;
 
@@ -25,6 +29,7 @@ function reducer(state = INITIAL_STATE, action) {
 //ACTION TYPES
 const UPDATE_USER_DATA = "UPDATE_USER_DATA";
 const UPDATE_ADVENTURES = "UPDATE_ADVENTURES";
+const TOGGLE_ADD_SPECIES_MODAL = "TOGGLE_ADD_SPECIES_MODAL";
 
 //ACTION CREATORS
 export function updateUserData(userData) {
@@ -38,6 +43,13 @@ export function updateAdventures(adventures) {
      return {
           type: UPDATE_ADVENTURES,
           payload: adventures
+     }
+}
+
+export function toggleAddSpeciesModal(val) {
+     return {
+          type: TOGGLE_ADD_SPECIES_MODAL,
+          payload: val
      }
 }
 

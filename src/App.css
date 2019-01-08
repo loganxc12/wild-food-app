@@ -177,3 +177,30 @@
   height: 100px;
   margin: 5px;
 }
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-main {
+  display: flex;
+  position:fixed;
+  background: white;
+  width: 60%;
+  height: 60vh;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  z-index: 1000;
+  box-sizing: border-box;
+}
