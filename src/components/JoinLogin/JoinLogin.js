@@ -16,7 +16,7 @@ export default class JoinLogin extends Component {
           return (
                <div>
                     <h1>Login or Sign Up</h1>
-                    <button onClick={this.login}>Login</button>
+                    <button className="general-button" onClick={this.login}>Login</button>
                </div>
           );
      }

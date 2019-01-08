@@ -30,7 +30,7 @@ class Header extends Component {
           return (
                <div className="header">
                     <div className="logo">
-                         <Link to="/">Made of Place</Link>
+                         <Link to="/">Wild Fed</Link>
                     </div>
                     <div className="nav">
                          <NavLink to="/dash">Dashboard</NavLink>

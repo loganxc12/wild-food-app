@@ -16,25 +16,34 @@ class AdventuresList extends Component {
 
      getAdventuresFromServer() {
           axios.get("/api/adventures").then(response => {
-               console.log("getAdventuresFromServer", response);
+               console.log(response);
                const { updateAdventures } = this.props;
-               if (response.data.length) {
+               if (response.data) {
                     updateAdventures(response.data);
-               }
+               } else {
+                    updateAdventures([]);
+               }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
           })
      }
 
      render() {
+          //Pulling down adventures array from Redux and mapping over to display
           const { adventures } = this.props;
           console.log(adventures);
           const adventuresToDisplay = adventures.length ?
-               adventures.map(el => <h3 key={el.id}>{el.title}</h3>) 
-               : <h3>Looks like you don't have any adventures yet</h3>
+               adventures.map(el => 
+                    <div key={el.id}>
+                         <h3>{el.title}</h3>
+                         <p>{el.date}</p>
+                         <p>{el.location}</p>
+                         <p>{el.description}</p>
+                    </div>
+               ) : <h3>Looks like you don't have any adventures yet</h3>
           return (
                <div className="adventures-list">
                     AdventuresList
                     <Link to="/adventure/add">
-                         <button>ADD NEW ADVENTURE</button>
+                         <button className="general-button">ADD NEW ADVENTURE</button>
                     </Link>
                     { adventuresToDisplay }
                </div>
