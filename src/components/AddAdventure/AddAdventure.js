@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import axios from "axios";
-import { connect } from "react-redux";
-import { toggleAddSpeciesModal } from "../../ducks/reducer";
 import AddSpeciesModal from "../SpeciesList/AddSpeciesModal";
 
 class AddAdventure extends Component {
@@ -25,6 +23,7 @@ class AddAdventure extends Component {
           this.showModal = this.showModal.bind(this);
           this.hideModal = this.hideModal.bind(this);
           this.addToImagesArray = this.addToImagesArray.bind(this);
+          this.addToSpeciesArray = this.addToSpeciesArray.bind(this);
           this.postAdventureToServer = this.postAdventureToServer.bind(this);
      }
 
@@ -54,24 +53,30 @@ class AddAdventure extends Component {
           })
      }
 
+     addToSpeciesArray(name, scientificName, season, description, imageUrl) {
+          this.setState({
+               species: [...this.state.species, { name, scientificName, season, description, imageUrl }]
+          })
+     }
+
      postAdventureToServer() {
-          const { title, date, location, description } = this.state;
-          const newAdventure = { title, date, location, description };
+          const { title, date, location, description, images, species } = this.state;
+          const newAdventure = { title, date, location, description, images, species };
           axios.post("/api/adventures", newAdventure).then(response => {
                this.setState({ redirect: true })
           })
      }
 
      render() {
-          const { redirect, imageUrl, images, showModal } = this.state;
-          // const { toggleAddSpeciesModal } = this.props;
+          const { redirect, imageUrl, images, species, showModal } = this.state;
           
           if (redirect) {
                return <Redirect to="/dash" />;
           }
 
-          const previewImages = images.map(image => 
-               <img src={image} className="preview-image" />
+          const previewImages = images.map( image => <img src={image} className="preview-image" /> );
+          const previewSpecies = species.map( species => 
+               <li>{species.name}</li>
           )
 
           return (
@@ -79,6 +84,7 @@ class AddAdventure extends Component {
                     <AddSpeciesModal 
                          show={showModal}
                          hide={this.hideModal}
+                         addSpecies={this.addToSpeciesArray}
                     />
                     <div className="add-adventure-form">
                          <h1>Add a New Adventure</h1>
@@ -97,6 +103,7 @@ class AddAdventure extends Component {
                               <option value="Fiddleheads">Fiddleheads</option>
                          </select>
                          <button onClick={this.showModal} className="general-button"><i className="fas fa-leaf"></i>  Add a New Species</button>
+                         <ul>{previewSpecies}</ul>
                          <textarea rows="6" cols="70" onChange={this.handleInputChange} name="description" placeholder="Description"></textarea>
                          <button onClick={this.postAdventureToServer} className="general-button">Save</button>
                          <button onClick={this.toggleRedirect} className="general-button">Cancel</button>
@@ -107,4 +114,5 @@ class AddAdventure extends Component {
 
 }
 
-export default connect(null, { toggleAddSpeciesModal })(AddAdventure);
+
+export default AddAdventure;

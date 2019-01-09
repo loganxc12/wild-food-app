@@ -194,13 +194,25 @@
 
 .modal-main {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position:fixed;
   background: white;
   width: 60%;
-  height: 60vh;
+  height: 70vh;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
   z-index: 1000;
   box-sizing: border-box;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 24px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
 }
