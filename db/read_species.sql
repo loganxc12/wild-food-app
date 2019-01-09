@@ -1,0 +1,1 @@
+SELECT * FROM species WHERE user_id = $1;
