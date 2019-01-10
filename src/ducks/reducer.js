@@ -1,7 +1,8 @@
 //INITIAL STATE OBJECT
 const INITIAL_STATE = {
      user: null,
-     adventures: []
+     adventures: null,
+     species: null
 }
 
 //REDUCER
@@ -16,6 +17,9 @@ function reducer(state = INITIAL_STATE, action) {
           case UPDATE_ADVENTURES: 
                return Object.assign( {}, state, {adventures: action.payload} );
           
+          case UPDATE_SPECIES: 
+               return Object.assign( {}, state, {species: action.payload} );
+          
           default: return state;
 
      }
@@ -25,6 +29,7 @@ function reducer(state = INITIAL_STATE, action) {
 //ACTION TYPES
 const UPDATE_USER_DATA = "UPDATE_USER_DATA";
 const UPDATE_ADVENTURES = "UPDATE_ADVENTURES";
+const UPDATE_SPECIES = "UPDATE_SPECIES";
 
 //ACTION CREATORS
 export function updateUserData(userData) {
@@ -38,6 +43,13 @@ export function updateAdventures(adventures) {
      return {
           type: UPDATE_ADVENTURES,
           payload: adventures
+     }
+}
+
+export function updateSpecies(species) {
+     return {
+          type: UPDATE_SPECIES,
+          payload: species
      }
 }
 

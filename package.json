@@ -5,6 +5,7 @@
   "main": "server/index.js",
   "proxy": "http://localhost:4000",
   "dependencies": {
+    "alertifyjs": "^1.11.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "connect-pg-simple": "^5.0.0",

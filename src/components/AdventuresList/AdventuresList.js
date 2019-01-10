@@ -18,30 +18,30 @@ class AdventuresList extends Component {
           axios.get("/api/adventures").then(response => {
                console.log(response);
                const { updateAdventures } = this.props;
-               if (response.data) {
-                    updateAdventures(response.data);
-               } else {
-                    updateAdventures([]);
-               }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+               updateAdventures(response.data);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
           })
      }
 
      render() {
-          //Pulling down adventures array from Redux and mapping over to display
+          //Pulling down adventures array from Redux and mapping over/conditionally rendering.
           const { adventures } = this.props;
-          console.log(adventures);
-          const adventuresToDisplay = adventures.length ?
-               adventures.map(el => 
-                    <div key={el.id}>
-                         <h3>{el.title}</h3>
-                         <p>{el.date}</p>
-                         <p>{el.location}</p>
-                         <p>{el.description}</p>
-                    </div>
-               ) : <h3>Looks like you don't have any adventures yet</h3>
+          let adventuresToDisplay;
+          if (adventures !== null) {
+               if (adventures.length) {
+                    adventuresToDisplay = adventures.map(el => 
+                         <div key={el.id}>
+                              <h3>{el.title}</h3>
+                              <p>{el.date}</p>
+                              <p>{el.location}</p>
+                              <p>{el.description}</p>
+                         </div> 
+                    );
+               } else { adventuresToDisplay = <h3>Looks like you haven't added any adventures yet.</h3> }
+          } else { adventuresToDisplay = <h3>Loading...</h3> }
+         
           return (
                <div className="adventures-list">
-                    AdventuresList
+                    <h2>Adventures List</h2>
                     <Link to="/adventure/add">
                          <button className="general-button">ADD NEW ADVENTURE</button>
                     </Link>

@@ -20,16 +20,18 @@ app.use(session({
      resave: false,
 }));
 
-//AUTH0 LOGIN/SIGN UP FUNCTIONALITY
+//Auth0 Login/Sign up functionality
 app.get("/auth/callback", authController.login); 
-//RETREIVES USER FROM SESSION
+//Retrieves user from session
 app.get("/auth/user-data", authController.getUser); 
-//KILLS SESSION
+//Kills session
 app.post("/auth/logout", authController.logout);
-//POSTING NEW ADVENTURE 
-app.post("/api/adventures", controller.postAdventure);
-//GET ADVENTURES FROM DATABASE
+//Get adventures from database
 app.get("/api/adventures", controller.readAdventures);
+//Posting new adventure
+app.post("/api/adventures", controller.postAdventure);
+//Get species from database
+app.get("/api/species", controller.readSpecies);
 
 
 const PORT = 4000;

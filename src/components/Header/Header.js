@@ -39,7 +39,7 @@ class Header extends Component {
                          <Link to="/"><button onClick={this.logout}>Logout</button></Link>
                        : <NavLink to="/login">Login</NavLink>
                          }
-                         { user && <img src={user.picture} /> }
+                         { user && <img src={user.picture} alt="profile"/> }
                     </div>
                </div>
           );

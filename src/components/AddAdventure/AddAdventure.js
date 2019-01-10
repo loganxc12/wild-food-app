@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
+import { connect } from "react-redux";
 import AddSpeciesModal from "../SpeciesList/AddSpeciesModal";
 
 class AddAdventure extends Component {
@@ -68,13 +69,14 @@ class AddAdventure extends Component {
      }
 
      render() {
-          const { redirect, imageUrl, images, species, showModal } = this.state;
+          const { title, date, location, description, redirect, imageUrl, images, species, showModal } = this.state;
+          const { user } = this.props;
           
           if (redirect) {
                return <Redirect to="/dash" />;
           }
 
-          const previewImages = images.map( image => <img src={image} className="preview-image" /> );
+          const previewImages = images.map( image => <img src={image} className="preview-image" alt="" /> );
           const previewSpecies = species.map( species => 
                <li>{species.name}</li>
           )
@@ -89,24 +91,28 @@ class AddAdventure extends Component {
                     <div className="add-adventure-form">
                          <h1>Add a New Adventure</h1>
                          <p>Adventures are like journal entries, they're detailed field reports of your foraging trips: a place to capture the species, images and stories you gather in your local ecosystem. </p>
-                         <input onChange={this.handleInputChange} name="title" placeholder="Title"></input>
-                         <input onChange={this.handleInputChange} name="location" placeholder="Location"></input>
-                         <input onChange={this.handleInputChange} name="date" placeholder="Date" type="date"></input>
-                         <div className="image-form-wrapper">
-                              <input onChange ={this.handleInputChange} name="imageUrl" placeholder="Image URL" value={imageUrl} ></input>
-                              <button onClick={this.addToImagesArray} className="general-button"><i className="fas fa-camera"></i>  Add Image To Adventure</button>
-                         </div>
-                         <div className="preview-images-wrapper">{previewImages}</div>
-                         <select>
-                              <option selected disabled>Choose a species from your Species List</option>
-                              <option value="Wild Leek">Wild Leek</option>
-                              <option value="Fiddleheads">Fiddleheads</option>
-                         </select>
-                         <button onClick={this.showModal} className="general-button"><i className="fas fa-leaf"></i>  Add a New Species</button>
-                         <ul>{previewSpecies}</ul>
-                         <textarea rows="6" cols="70" onChange={this.handleInputChange} name="description" placeholder="Description"></textarea>
-                         <button onClick={this.postAdventureToServer} className="general-button">Save</button>
-                         <button onClick={this.toggleRedirect} className="general-button">Cancel</button>
+                              <input onChange={this.handleInputChange} name="title" placeholder="Title"></input>
+                              <input onChange={this.handleInputChange} name="location" placeholder="Location"></input>
+                              <input onChange={this.handleInputChange} name="date" placeholder="Date" type="date"></input>
+                              <div className="image-form-wrapper">
+                                   <input onChange ={this.handleInputChange} name="imageUrl" placeholder="Image URL" value={imageUrl} ></input>
+                                   <button onClick={this.addToImagesArray} className="general-button"><i className="fas fa-camera"></i>  Add Image To Adventure</button>
+                              </div>
+                              <div className="preview-images-wrapper">{previewImages}</div>
+                              <select>
+                                   <option selected disabled>Choose a species from your Species List</option>
+                                   <option value="Wild Leek">Wild Leek</option>
+                                   <option value="Fiddleheads">Fiddleheads</option>
+                              </select>
+                              <button onClick={this.showModal} className="general-button"><i className="fas fa-leaf"></i>  Add a New Species</button>
+                              <ul>{previewSpecies}</ul>
+                              <textarea rows="6" cols="70" onChange={this.handleInputChange} name="description" placeholder="Description"></textarea>
+                              <button 
+                                   onClick={ (title && location && date && description && images.length && species.length) ? 
+                                        this.postAdventureToServer : () => alert("Please fill out all fields to add a new adventure") } 
+                                   className="general-button"> Save
+                              </button>
+                              <button onClick={this.toggleRedirect} className="general-button">Cancel</button>
                     </div>
                </div>
           );
@@ -114,5 +120,9 @@ class AddAdventure extends Component {
 
 }
 
+function mapStateToProps(reduxState) {
+     const { user } = reduxState;
+     return { user };
+}
 
-export default AddAdventure;
+export default connect(mapStateToProps)(AddAdventure);

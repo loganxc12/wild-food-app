@@ -28,6 +28,7 @@ class AddSpeciesModal extends Component {
      }
 
      render() {
+          const { name, scientificName, season, description, imageUrl } = this.state;
           const { show, hide } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
           return show ? (
@@ -40,7 +41,11 @@ class AddSpeciesModal extends Component {
                          <input onChange={this.handleInputChange} name="season" placeholder="Season"></input>
                          <input onChange={this.handleInputChange} name="description" placeholder="Description"></input>
                          <input onChange={this.handleInputChange} name="imageUrl" placeholder="Image URL"></input>
-                         <button onClick={this.modalSubmit} className="general-button">Add Species</button>
+                         <button 
+                              onClick={ (name && scientificName && season && description && imageUrl) ? 
+                                   this.modalSubmit : () => alert("Please fill out all fields to add a new species") } 
+                              className="general-button">Add Species
+                         </button>
                     </section>
                </div>
           ) : null;

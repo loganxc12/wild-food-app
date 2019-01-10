@@ -7,7 +7,7 @@ module.exports = {
           // const { id } = req.session.user;
           const user_id = 1;
           //Insert single adventure into adventures table.
-          dbInstance.create_adventure([ title, date, location, description, user_id ])
+          dbInstance.create_adventure([ title, date, location, description, images, user_id ])
                .then(adventures => {
                     const adventure = adventures[0];
                     //Get all species stored in db for user in session.
@@ -48,7 +48,21 @@ module.exports = {
           // const { id } = req.session.user;
           const user_id = 1;
           dbInstance.read_adventures([ user_id ]) 
-               .then(adventures => res.status(200).send(adventures) )
+               .then(adventures => {
+                    res.status(200).send(adventures)
+               })
+               .catch(error => {
+                    res.status(500).send({errorMessage: "Error in readAdventures method"});
+                    console.log(error);
+               })
+     },
+
+     readSpecies: (req, res) => {
+          const dbInstance = req.app.get("db");
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.read_species([ user_id ])
+               .then(species => res.status(200).send(species))
                .catch(error => {
                     res.status(500).send({errorMessage: "Error in readAdventures method"});
                     console.log(error);
