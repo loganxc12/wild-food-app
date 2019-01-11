@@ -1,7 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 
-export default function Adventure(props) {
-     return (
-          <div>Adventure</div>
-     );
+class Adventure extends Component {
+
+     constructor(props) {
+          super(props);
+     }
+
+     render() {
+          return (
+               <div>Adventure</div>
+          );
+     }
+     
 }
+
+export default Adventure;
