@@ -3,6 +3,7 @@ import axios from "axios";
 import { NavLink, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { updateUserData } from "../../ducks/reducer";
+import logo from "./logo.png";
 
 class Header extends Component {
      constructor(props) {
@@ -29,15 +30,18 @@ class Header extends Component {
           
           return (
                <div className="header">
-                    <div className="logo">
-                         <Link to="/">Wild Fed</Link>
+                    <div className="nav-left">
+                      <NavLink to="/">ABOUT</NavLink>
+                      <NavLink to="/"login>GET STARTED</NavLink>
                     </div>
-                    <div className="nav">
-                         <NavLink to="/dash">Dashboard</NavLink>
+                    <div className="logo">
+                         <Link to="/"><img src={logo}/></Link>
+                    </div>
+                    <div className="nav-right">
                          {
                          user ?
-                         <Link to="/"><button onClick={this.logout}>Logout</button></Link>
-                       : <NavLink to="/login">Login</NavLink>
+                         <Link to="/"><button onClick={this.logout}>LOGOUT</button></Link>
+                       : <NavLink to="/login">LOGIN</NavLink>
                          }
                          { user && <img src={user.picture} alt="profile"/> }
                     </div>

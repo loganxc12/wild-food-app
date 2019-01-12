@@ -1,0 +1,272 @@
+/* SASS VARIABLES */
+$heading-font: "Montserrat", sans-serif;
+$paragraph-font: "Open Sans", sans-serif;
+$green: #10BA68;
+$text-dark: #292929;
+$text-light: #9B9B9B;
+
+/* SASS PLACEHOLDERS */
+%button {
+  background-color: $green;
+  font-family: $heading-font;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.App {
+  text-align: center;
+}
+
+/* HEADER */
+
+.header {
+  width: 100%;
+  height: 100px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+
+  .nav-left {
+    position: absolute;
+    left: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      color: $text-light;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      margin: 15px;
+      cursor: pointer;
+    }
+
+  }
+
+  .nav-right {
+    position: absolute;
+    right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      padding: 10px;
+    }
+
+    a {
+      color: $text-light;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      margin: 10px;
+      cursor: pointer;
+      padding-bottom: 2px;
+    }
+
+  }
+
+  .logo {
+    margin: 0 auto;
+
+    img {
+      width: 180px;
+      height: 64px;
+    }
+  }
+
+}
+
+/* HOMEPAGE */
+
+.hero {
+  width: 100%;
+  height: calc(100vh - 100px);;
+  background-image: linear-gradient(rgba(33, 41, 51, 0.54), rgba(33, 41, 51, 0.54)), url("./images/homepage-hero.jpg");
+  background-size: cover;
+  display: flex;
+  color: #fff;
+
+  .banner-wrapper {
+    display: flex;
+    align-items: center;
+    font-family: $heading-font;
+    letter-spacing: 0.02em;
+    width: 60%;
+    max-width: 805px;
+    margin: auto;
+
+    h1 {
+      margin: 0;
+      font-size: 35px;
+    }
+
+    p {
+      margin: 30px 0;
+      font-size: 18px;
+      line-height: 23px;
+    }
+
+    button {
+      @extend %button;
+      padding: 13px 35px;
+    }
+
+  }
+}
+
+// .homepage-banner {
+//   font-family: $heading-font;
+//   letter-spacing: 0.02em;
+//   width: 60%;
+//   height: 50vh;
+//   margin: auto;
+// }
+
+// .homepage-banner button {
+//   margin: 10px;
+//   padding: 10px;
+//   background-color: #232323;
+//   font-family: 'Staatliches', cursive;
+//   color: #fff;
+//   font-size: 17px;
+//   letter-spacing: 0.02em;
+//   cursor: pointer;
+// }
+
+/* DASHBOARD */
+
+.dash-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-nav {
+  margin: 20px;
+}
+.dash-nav a {
+  margin: 15px;
+}
+
+.adventures-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.adventures-list-item {
+  margin: 20px;
+  padding: 20px;
+  border: 4px solid black;
+  cursor: pointer;
+}
+
+.add-adventure-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-adventure-form {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.add-adventure-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-adventure-wrapper input {
+  margin: 10px;
+  font-size: 18px;
+}
+
+.add-adventure-wrapper textarea {
+  margin: 10px;
+  font-size: 18px;
+}
+
+.image-form-wrapper {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.general-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-family: 'Staatliches', cursive;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background-color: seagreen;
+  color: #fff;
+  cursor: pointer;
+}
+
+.preview-images-wrapper {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.preview-image {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position:fixed;
+  background: white;
+  width: 60%;
+  height: 70vh;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 24px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+}
