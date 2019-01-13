@@ -10,7 +10,7 @@ class Header extends Component {
      constructor(props) {
           super(props);
           this.state = {
-            dropdown: true
+            dropdown: false
           }
           this.logout = this.logout.bind(this);
      }
@@ -37,7 +37,7 @@ class Header extends Component {
               <div className="header">
                   <div className="nav-left">
                     <NavLink to="/">ABOUT</NavLink>
-                    <NavLink to="/login">GET STARTED</NavLink>
+                    <NavLink to="/adventure/add">+ NEW ADVENTURE</NavLink>
                   </div>
                   <div className="logo">
                         <Link to="/"><img src={logo}/></Link>
@@ -45,7 +45,7 @@ class Header extends Component {
                   <div className="nav-right">
                         {
                         user ?
-                        <Link to="/"><button onClick={this.logout}>LOGOUT</button></Link>
+                        <Link to="/"><a onClick={this.logout}>LOGOUT</a></Link>
                       : <NavLink to="/login">LOGIN</NavLink>
                         }
                         { user && <img src={user.picture} alt="profile"/> }
@@ -58,7 +58,9 @@ class Header extends Component {
                     { header }
                     <Dropdown /> 
                </div>
-          ) : { header }
+          ) :  <div className="header-wrapper">
+                    { header } 
+               </div>
      }
      
 }

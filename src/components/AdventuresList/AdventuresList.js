@@ -30,18 +30,18 @@ class AdventuresList extends Component {
           if (adventures !== null) {
                if (adventures.length) {
                     adventuresToDisplay = adventures.map(el => 
-                         // <Link to={`/adventure/${el.id}`} style={{textDecoration: "none"}}>
                               <div key={el.id} className="list-item">
                                    <div className="title">
                                         <p>06/27/2018</p>
-                                        <h2>{el.title}</h2>
+                                        <Link to={`/adventure/${el.id}`} style={{textDecoration: "none", color: "white"}}>
+                                             <h2>{el.title}</h2>
+                                        </Link>
                                    </div>
                                    <img src={adventureMenu} />
                                    {/* <p>{el.date}</p>
                                    <p>{el.location}</p>
                                    <p>{el.description}</p> */}
                               </div> 
-                         // </Link>
                     );
                } else { adventuresToDisplay = <h3>Looks like you haven't added any adventures yet.</h3> }
           } else { adventuresToDisplay = <h3>Loading...</h3> }

@@ -19,6 +19,15 @@ $text-light: #9B9B9B;
   cursor: pointer;
 }
 
+%form-button {
+  font-family: $heading-font;
+  font-size: 13px;
+  background-color: #E0E2DF;
+  color: #617067;
+  border: 1px solid #9a9c9b44;
+  cursor: pointer;
+}
+
 %hero {
   width: 100%;
   height: calc(100vh - 100px);;
@@ -216,7 +225,7 @@ $text-light: #9B9B9B;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/currants.jpg");
+    background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/blackberries.jpg");
     background-size: cover;
       .title * {
         margin: 7px;
@@ -240,6 +249,8 @@ $text-light: #9B9B9B;
   }
 
 }
+
+/* ADD ADVENTURE PAGE */
 
 .add-adventure-wrapper {
   display: flex;
@@ -274,7 +285,7 @@ $text-light: #9B9B9B;
       letter-spacing: 0.02em;
       line-height: 22px;
       color: #9b9b9b;
-      border: 2px solid rgba(155, 155, 155, 0.349);
+      border: 2px solid rgba(155, 155, 155, 0.274);
     }
 
     .button-container {
@@ -282,14 +293,9 @@ $text-light: #9B9B9B;
       margin-top: 7px;
       
       button {
-        font-family: $heading-font;
-        font-size: 13px;
-        background-color: #E0E2DF;
-        color: #617067;
-        border: 1px solid #9a9c9b44;
+        @extend %form-button;
         margin: 15px;
         padding: 14px 25px;
-        cursor: pointer;
       }
     }
 
@@ -299,7 +305,7 @@ $text-light: #9B9B9B;
       justify-content: center;
       align-items: center;
       width: 100%;
-      height: 420px;
+      height: 65vh;
       margin: 20px 0;
       background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/upload-box-bg.jpg");
       background-size: cover;
@@ -349,38 +355,120 @@ $text-light: #9B9B9B;
       }
     }
 
-
-  
-    
   }
-  
+
 }
 
-// .add-adventure-wrapper input {
-//   margin: 10px;
-//   font-size: 18px;
-// }
+/* SINGLE ADVENTURE PAGE */
 
-.add-adventure-wrapper textarea {
-  margin: 10px;
-  font-size: 18px;
+.adventure-wrapper {
+  font-family: $heading-font;
+
+  .settings-box {
+    text-align: right;
+    padding: 30px 60px;
+    font-size: 35px;
+    color: $dark;
+
+    i {
+      cursor: pointer;
+    }
+  }
 }
 
-.image-form-wrapper {
+.adventure-hero {
+  @extend %hero;
+  position: relative;
+  justify-content: center;
+  background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/maidens-cliff-fall.jpg");
+
+  .adventure-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    width: 85%;
+    position: absolute;
+    bottom: 50px;
+    font-family: $heading-font;
+    letter-spacing: 0.02em;
+    line-height: 22px;
+    color: #fff;
+
+    h1 {
+      font-size: 40px;
+    }
+
+    h3, button {
+      margin-right: 30px;
+    }
+
+    .adventure-details {
+      display: flex;
+    }
+
+    .adventure-photos {
+      display: flex;
+      align-items: flex-end;
+      align-items: center;
+
+      button {
+        @extend %button;
+        padding: 12px 30px;
+      }
+    }
+  }
+
+}
+
+.adventure-overview, .description-box {
   display: flex;
-  margin-bottom: 12px;
+  width: 100%;
+
+  .species-box {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 50%;
+
+    .species-box-content {
+      margin: 30px 60px;
+
+      ul {
+        font-size: 18px;
+        line-height: 35px;
+      }
+    }
+  }
+
+  .map-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+
+    .map-preview {
+      background-image: url("./images/map-preview.jpg");
+      background-size: cover;
+      margin-top: 40px;
+      width: 350px;
+      height: 275px;
+    }
+  }
+
+  .description-box-content {
+    margin: 0 60px;
+    text-align: left;
+
+    p {
+      font-weight: 400;
+      line-height: 22px; 
+      color: $text-light;
+    }
+
+  }
+
 }
 
-.preview-images-wrapper {
-  display: flex;
-  margin-bottom: 12px;
-}
-
-.preview-image {
-  width: 100px;
-  height: 100px;
-  margin: 5px;
-}
 
 /* MODAL */
 
@@ -398,25 +486,58 @@ $text-light: #9B9B9B;
 
 .modal-main {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   position:fixed;
   background: white;
-  width: 60%;
+  width: 57%;
   height: 70vh;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
   z-index: 1000;
   box-sizing: border-box;
-}
 
-.modal-close-btn {
-  position: absolute;
-  top: 14px;
-  right: 24px;
-  cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
+  .modal-content {
+    width: 100%;
+    margin: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    a {
+      position: absolute;
+      top: 14px;
+      right: 24px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        @extend %form-button;
+        margin: 15px;
+        padding: 14px 25px;
+      }
+
+    }
+
+    form {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+      // height: 100%;
+    }
+
+
+
+    // input {
+    //   margin: 10px 0;
+    // }
+
+  }
+
 }
