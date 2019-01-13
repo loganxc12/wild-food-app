@@ -14,9 +14,14 @@ export default class JoinLogin extends Component {
 
      render() {
           return (
-               <div>
-                    <h1>Login or Sign Up</h1>
-                    <button className="general-button" onClick={this.login}>Login</button>
+               <div className="login-hero">
+                    <div className="banner-wrapper">
+                         <div className="banner">
+                              <h1>LOGIN OR SIGN UP</h1>
+                              <p>Have an account or want to make one? Click the button below to start your journey.</p>
+                              <button onClick={this.login}>LET'S GO <i className="fas fa-long-arrow-alt-right"></i></button>
+                         </div>
+                    </div>
                </div>
           );
      }

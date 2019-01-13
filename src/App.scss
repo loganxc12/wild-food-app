@@ -1,11 +1,13 @@
 /* SASS VARIABLES */
+
 $heading-font: "Montserrat", sans-serif;
 $paragraph-font: "Open Sans", sans-serif;
 $green: #10BA68;
-$text-dark: #292929;
+$dark: #292929;
 $text-light: #9B9B9B;
 
 /* SASS PLACEHOLDERS */
+
 %button {
   background-color: $green;
   font-family: $heading-font;
@@ -17,11 +19,56 @@ $text-light: #9B9B9B;
   cursor: pointer;
 }
 
+%hero {
+  width: 100%;
+  height: calc(100vh - 100px);;
+  background-size: cover;
+  display: flex;
+}
+
+/* GLOBAL STYLES */
+
 .App {
   text-align: center;
 }
 
+.banner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $heading-font;
+  letter-spacing: 0.02em;
+  width: 60%;
+  max-width: 805px;
+  margin: auto;
+  color: #fff;
+
+  h1 {
+    margin: 0;
+    font-size: 35px;
+  }
+
+  p {
+    margin: 30px 0;
+    font-size: 18px;
+    line-height: 23px;
+  }
+
+  button {
+    @extend %button;
+    margin-top: 6px;
+    padding: 13px 35px;
+  }
+
+}
+
 /* HEADER */
+
+.header-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 .header {
   width: 100%;
@@ -30,6 +77,17 @@ $text-light: #9B9B9B;
   display: flex;
   justify-content: space-between;
   align-items: center; 
+  font-family: $heading-font;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+
+  a {
+    color: $text-light;
+    cursor: pointer;
+    text-decoration: none;
+  }
 
   .nav-left {
     position: absolute;
@@ -39,12 +97,7 @@ $text-light: #9B9B9B;
     align-items: center;
 
     a {
-      color: $text-light;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-decoration: none;
       margin: 15px;
-      cursor: pointer;
     }
 
   }
@@ -64,12 +117,7 @@ $text-light: #9B9B9B;
     }
 
     a {
-      color: $text-light;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-decoration: none;
       margin: 10px;
-      cursor: pointer;
       padding-bottom: 2px;
     }
 
@@ -86,118 +134,149 @@ $text-light: #9B9B9B;
 
 }
 
-/* HOMEPAGE */
-
-.hero {
+.dropdown {
   width: 100%;
-  height: calc(100vh - 100px);;
-  background-image: linear-gradient(rgba(33, 41, 51, 0.54), rgba(33, 41, 51, 0.54)), url("./images/homepage-hero.jpg");
-  background-size: cover;
+  height: 55px;
+  background-color: $dark;
   display: flex;
-  color: #fff;
+  align-items: center;
+  font-family: $heading-font;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 
-  .banner-wrapper {
+  .dropdown-option {
     display: flex;
     align-items: center;
-    font-family: $heading-font;
-    letter-spacing: 0.02em;
-    width: 60%;
-    max-width: 805px;
-    margin: auto;
+    height: 100%;
+    padding: 0 30px;
+    border-right: 2px solid #70707069;
+    cursor: pointer;
+  }
 
-    h1 {
-      margin: 0;
-      font-size: 35px;
-    }
+  a {
+    height: 100%;
+    text-decoration: none;
+    color: #fff;
+  }
 
-    p {
-      margin: 30px 0;
-      font-size: 18px;
-      line-height: 23px;
-    }
-
-    button {
-      @extend %button;
-      padding: 13px 35px;
-    }
-
+  .selected {
+    background-color: $green;
+    border-right: none;
   }
 }
 
-// .homepage-banner {
-//   font-family: $heading-font;
-//   letter-spacing: 0.02em;
-//   width: 60%;
-//   height: 50vh;
-//   margin: auto;
-// }
+/* HOMEPAGE */
 
-// .homepage-banner button {
-//   margin: 10px;
-//   padding: 10px;
-//   background-color: #232323;
-//   font-family: 'Staatliches', cursive;
-//   color: #fff;
-//   font-size: 17px;
-//   letter-spacing: 0.02em;
-//   cursor: pointer;
-// }
+.homepage-hero {
+  @extend %hero;
+  background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/currants.jpg");
+}
+
+/* LOGIN AND SIGN UP PAGE */
+
+.login-hero {
+  @extend %hero;
+  background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/currants.jpg");
+}
 
 /* DASHBOARD */
 
-.dash-container {
+.dash-wrapper {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* ADVENTURES LIST */
+
+.list-wrapper {
+  margin: 0;
   display: flex;
-  flex-direction: column;
-}
+  flex-wrap: wrap;
+  position: relative;
+  font-family: $heading-font;
+  font-weight: 700;
+  color: #fff;
 
-.dash-nav {
-  margin: 20px;
-}
-.dash-nav a {
-  margin: 15px;
-}
+  .list-item {
+    position: relative;
+    width: 33.33%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/currants.jpg");
+    background-size: cover;
+      .title * {
+        margin: 7px;
+        cursor: pointer;
+      }
+      h2 {
+        text-transform: uppercase;
+      }
+      img {
+        position: absolute;
+        bottom: 30px;
+        height: 35px;
+        cursor: pointer;
+      }
+      .eye-menu {
+        position: absolute;
+        bottom: 30px;
+        height: 45px;
+        cursor: pointer;
+      }
+  }
 
-.adventures-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.adventures-list-item {
-  margin: 20px;
-  padding: 20px;
-  border: 4px solid black;
-  cursor: pointer;
 }
 
 .add-adventure-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: $heading-font;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: $dark;
+
+  .add-adventure-form {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 17px;
+    line-height: 23px;
+    
+    h1 {
+      margin-bottom: 15px;
+    }
+
+    input {
+      margin: 10px;
+      padding: 15px;
+      font-size: 16px;
+      font-family: $heading-font;
+      color: rgba(155, 155, 155, 0.438);
+      border: 2px solid rgba(155, 155, 155, 0.349);
+    }
+
+    .input-box {
+      color: rgba(155, 155, 155, 0.438);
+    }
+    
+
+  }
+  
 }
 
-.add-adventure-form {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-.add-adventure-form form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.add-adventure-wrapper input {
-  margin: 10px;
-  font-size: 18px;
-}
+// .add-adventure-wrapper input {
+//   margin: 10px;
+//   font-size: 18px;
+// }
 
 .add-adventure-wrapper textarea {
   margin: 10px;

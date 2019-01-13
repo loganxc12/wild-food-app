@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { updateSpecies } from "../../ducks/reducer";
+import speciesMenu from "./eye.png";
 
 class SpeciesList extends Component {
      constructor(props) {
@@ -27,19 +28,19 @@ class SpeciesList extends Component {
           if (species !== null) {
                if (species.length) {
                     speciesToDisplay = species.map(el => 
-                         <div key={el.id}>
-                              <h3>{el.name}</h3>
-                              <p>{el.scientific_name}</p>
-                              <p>{el.season}</p>
+                         <div key={el.id} className="list-item">
+                              <div className="title">
+                                   <p>{el.scientific_name}</p>
+                                   <h2>{el.name}</h2>
+                              </div>
+                              <img src={speciesMenu} className="eye-menu" />
                          </div> 
                     );
                } else { speciesToDisplay = <h3>Looks like you haven't added any species yet.</h3> }
           } else { speciesToDisplay = <h3>Loading...</h3> }
 
           return (
-               <div className="species-list">
-                    <h2>Species List</h2>
-                    <button className="general-button">ADD NEW SPECIES</button>
+               <div className="list-wrapper">
                     { speciesToDisplay }
                </div>
           );

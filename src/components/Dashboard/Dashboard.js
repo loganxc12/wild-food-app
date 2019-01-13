@@ -13,21 +13,11 @@ class Dashboard extends Component {
           const { match } = this.props;
 
           return (
-               <div className="dash-container">
-                    Dashboard
-                    <div className="dash-nav">
-                         <Link to="/dash">My Adventures</Link>
-                         <Link to="/dash/list">Species List</Link>
-                         <Link to="/dash/calendar">Seasonal Calendar</Link>
-                         <Link to="/dash/map">Map</Link>
-                    </div>
-                    <div className="dash">
-                         { match.path === "/dash/list" && <SpeciesList /> }
-                         { match.path === "/dash/calendar" && <Calendar /> }
-                         { match.path === "/dash/map" && <Map /> }
-                         { match.path === "/dash" && <AdventuresList /> }
-                    </div>
-
+               <div className="dash-wrapper">
+                    { match.path === "/dash/list" && <SpeciesList /> }
+                    { match.path === "/dash/calendar" && <Calendar /> }
+                    { match.path === "/dash/map" && <Map /> }
+                    { match.path === "/dash" && <AdventuresList /> }
                </div>
           );
 

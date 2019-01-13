@@ -3,11 +3,15 @@ import axios from "axios";
 import { NavLink, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { updateUserData } from "../../ducks/reducer";
+import Dropdown from "./Dropdown";
 import logo from "./logo.png";
 
 class Header extends Component {
      constructor(props) {
           super(props);
+          this.state = {
+            dropdown: true
+          }
           this.logout = this.logout.bind(this);
      }
 
@@ -26,27 +30,35 @@ class Header extends Component {
      }
 
      render() {
+          const { dropdown } = this.state;
           const { user } = this.props;
-          
-          return (
-               <div className="header">
-                    <div className="nav-left">
-                      <NavLink to="/">ABOUT</NavLink>
-                      <NavLink to="/"login>GET STARTED</NavLink>
-                    </div>
-                    <div className="logo">
-                         <Link to="/"><img src={logo}/></Link>
-                    </div>
-                    <div className="nav-right">
-                         {
-                         user ?
-                         <Link to="/"><button onClick={this.logout}>LOGOUT</button></Link>
-                       : <NavLink to="/login">LOGIN</NavLink>
-                         }
-                         { user && <img src={user.picture} alt="profile"/> }
-                    </div>
-               </div>
+
+          const header = (
+              <div className="header">
+                  <div className="nav-left">
+                    <NavLink to="/">ABOUT</NavLink>
+                    <NavLink to="/login">GET STARTED</NavLink>
+                  </div>
+                  <div className="logo">
+                        <Link to="/"><img src={logo}/></Link>
+                  </div>
+                  <div className="nav-right">
+                        {
+                        user ?
+                        <Link to="/"><button onClick={this.logout}>LOGOUT</button></Link>
+                      : <NavLink to="/login">LOGIN</NavLink>
+                        }
+                        { user && <img src={user.picture} alt="profile"/> }
+                  </div>
+              </div>
           );
+          
+          return dropdown ? (
+               <div className="header-wrapper">
+                    { header }
+                    <Dropdown /> 
+               </div>
+          ) : { header }
      }
      
 }

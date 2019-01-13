@@ -89,9 +89,9 @@ class AddAdventure extends Component {
                          addSpecies={this.addToSpeciesArray}
                     />
                     <div className="add-adventure-form">
-                         <h1>Add a New Adventure</h1>
+                         <h1>ADD A NEW ADVENTURE</h1>
                          <p>Adventures are like journal entries, they're detailed field reports of your foraging trips: a place to capture the species, images and stories you gather in your local ecosystem. </p>
-                              <input onChange={this.handleInputChange} name="title" placeholder="Title"></input>
+                              <input onChange={this.handleInputChange} name="title" placeholder="Give your adventure a title (ex: Spring Foraging)" className="input-box"></input>
                               <input onChange={this.handleInputChange} name="location" placeholder="Location"></input>
                               <input onChange={this.handleInputChange} name="date" placeholder="Date" type="date"></input>
                               <div className="image-form-wrapper">
