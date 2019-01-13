@@ -32,6 +32,16 @@ $text-light: #9B9B9B;
   text-align: center;
 }
 
+.delete-circle {
+  background-color: $green;
+  padding: 5px;
+  border: none;
+  border-radius: 50%;
+  font-family: $heading-font;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .banner-wrapper {
   display: flex;
   align-items: center;
@@ -250,25 +260,98 @@ $text-light: #9B9B9B;
     margin-bottom: 30px;
     font-size: 17px;
     line-height: 23px;
+    font-family: $heading-font;
     
     h1 {
       margin-bottom: 15px;
     }
 
-    input {
+    input, textarea {
       margin: 10px;
       padding: 15px;
       font-size: 16px;
       font-family: $heading-font;
-      color: rgba(155, 155, 155, 0.438);
+      letter-spacing: 0.02em;
+      line-height: 22px;
+      color: #9b9b9b;
       border: 2px solid rgba(155, 155, 155, 0.349);
     }
 
-    .input-box {
-      color: rgba(155, 155, 155, 0.438);
+    .button-container {
+      display: flex;
+      margin-top: 7px;
+      
+      button {
+        font-family: $heading-font;
+        font-size: 13px;
+        background-color: #E0E2DF;
+        color: #617067;
+        border: 1px solid #9a9c9b44;
+        margin: 15px;
+        padding: 14px 25px;
+        cursor: pointer;
+      }
     }
-    
 
+    .image-upload-box {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 420px;
+      margin: 20px 0;
+      background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/upload-box-bg.jpg");
+      background-size: cover;
+      color: #fff;
+      font-size: 20px;
+
+      .image-upload-progress {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        background-color: #00000071;
+        width: 100%;
+        height: 90px;
+
+        .image-preview {
+          position: relative;
+          width: 65px;
+          height: 65px;
+          background-image: url("./images/upload-preview.jpg");
+          background-size: cover;
+          background-color: white;
+          margin-left: 15px; 
+
+          button {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+          }
+        }
+      }
+    }
+
+    .add-species-box {
+      ul {
+        line-height: 38px;
+      }
+    }
+
+    .adventure-submit {
+      margin: 20px;
+      display: flex;
+      justify-content: center;
+      button {
+        @extend %button;
+        padding: 13px 35px;
+      }
+    }
+
+
+  
+    
   }
   
 }
@@ -286,18 +369,6 @@ $text-light: #9B9B9B;
 .image-form-wrapper {
   display: flex;
   margin-bottom: 12px;
-}
-
-.general-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 20px;
-  font-family: 'Staatliches', cursive;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  background-color: seagreen;
-  color: #fff;
-  cursor: pointer;
 }
 
 .preview-images-wrapper {

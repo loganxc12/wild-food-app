@@ -91,28 +91,41 @@ class AddAdventure extends Component {
                     <div className="add-adventure-form">
                          <h1>ADD A NEW ADVENTURE</h1>
                          <p>Adventures are like journal entries, they're detailed field reports of your foraging trips: a place to capture the species, images and stories you gather in your local ecosystem. </p>
-                              <input onChange={this.handleInputChange} name="title" placeholder="Give your adventure a title (ex: Spring Foraging)" className="input-box"></input>
-                              <input onChange={this.handleInputChange} name="location" placeholder="Location"></input>
-                              <input onChange={this.handleInputChange} name="date" placeholder="Date" type="date"></input>
-                              <div className="image-form-wrapper">
-                                   <input onChange ={this.handleInputChange} name="imageUrl" placeholder="Image URL" value={imageUrl} ></input>
-                                   <button onClick={this.addToImagesArray} className="general-button"><i className="fas fa-camera"></i>  Add Image To Adventure</button>
+                         <input onChange={this.handleInputChange} name="title" placeholder="Give your adventure a title (ex: Spring Foraging)"></input>
+                         <div class="button-container">
+                              <button>+ Add the Location</button>
+                              <button>+ Add the Date</button>
+                         </div>
+                         <div className="image-upload-box">
+                              <h2>CLICK HERE TO UPLOAD PHOTOS</h2>
+                              <div className="image-upload-progress">
+                                   <div className="image-preview">
+                                        <button className="delete-circle">X</button>
+                                   </div>
                               </div>
-                              <div className="preview-images-wrapper">{previewImages}</div>
-                              <select>
-                                   <option selected disabled>Choose a species from your Species List</option>
-                                   <option value="Wild Leek">Wild Leek</option>
-                                   <option value="Fiddleheads">Fiddleheads</option>
-                              </select>
-                              <button onClick={this.showModal} className="general-button"><i className="fas fa-leaf"></i>  Add a New Species</button>
-                              <ul>{previewSpecies}</ul>
-                              <textarea rows="6" cols="70" onChange={this.handleInputChange} name="description" placeholder="Description"></textarea>
+                         </div>
+                         <div className="add-species-box">
+                              <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
+                              <div class="button-container">
+                                   <button><i className="fas fa-angle-down"></i> Choose from Species List</button>
+                                   <button onClick={this.showModal}>+ Add New Species</button>
+                              </div>
+                              <ul>
+                                   <li>SAGE <button className="delete-circle">X</button></li>
+                                   <li>JUNIPER <button className="delete-circle">X</button></li>
+                                   <li>SWEETGRASS <button className="delete-circle">X</button></li>
+                              </ul>
+                         </div>
+                         <h2>DESCRIPTION:</h2>
+                         <textarea rows="12" cols="70" onChange={this.handleInputChange} name="description" placeholder="Write to your heart’s content about this foraging trip: where you went, what you found, essential gear you packed, new species you learned or discovered for the first time…"></textarea>
+                         <div className="adventure-submit">
                               <button 
                                    onClick={ (title && location && date && description && images.length && species.length) ? 
                                         this.postAdventureToServer : () => alert("Please fill out all fields to add a new adventure") } 
-                                   className="general-button"> Save
+                              > SAVE ADVENTURE
                               </button>
-                              <button onClick={this.toggleRedirect} className="general-button">Cancel</button>
+                              {/* <button onClick={this.toggleRedirect}>CANCEL</button> */}
+                         </div>
                     </div>
                </div>
           );
@@ -126,3 +139,15 @@ function mapStateToProps(reduxState) {
 }
 
 export default connect(mapStateToProps)(AddAdventure);
+
+ {/* <input onChange={this.handleInputChange} name="location" placeholder="Location"></input>
+     <input onChange={this.handleInputChange} name="date" placeholder="Date" type="date"></input> */}
+{/*  <input onChange ={this.handleInputChange} name="imageUrl" placeholder="Image URL" value={imageUrl} ></input>
+     <button onClick={this.addToImagesArray} className="general-button"><i className="fas fa-camera"></i>  Add Image To Adventure</button> */}
+     // <div className="preview-images-wrapper">{previewImages}</div>
+{/* <select>
+     <option selected disabled>Choose a species from your Species List</option>
+     <option value="Wild Leek">Wild Leek</option>
+     <option value="Fiddleheads">Fiddleheads</option>
+</select> */}
+{/* <ul>{previewSpecies}</ul> */}
