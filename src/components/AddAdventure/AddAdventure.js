@@ -54,9 +54,9 @@ class AddAdventure extends Component {
         })
     }
 
-    addToSpeciesArray(name, scientificName, season, description, imageUrl) {
+    addToSpeciesArray(name, scientificName, imageUrl, description) {
         this.setState({
-            species: [...this.state.species, { name, scientificName, season, description, imageUrl }]
+            species: [...this.state.species, { name, scientificName, imageUrl, description }]
         })
     }
 
@@ -76,10 +76,10 @@ class AddAdventure extends Component {
             return <Redirect to="/dash" />;
         }
 
-        const previewImages = images.map( image => <img src={image} className="preview-image" alt="" /> );
+        const previewImages = images.map( image => <img src={image} className="image-preview" alt="" /> );
         const previewSpecies = species.map( species => 
-            <li>{species.name}</li>
-        )
+            <li>{species.name.toUpperCase()} <button className="delete-circle">X</button></li>
+        );
 
         return (
             <div className="add-adventure-wrapper">
@@ -105,22 +105,19 @@ class AddAdventure extends Component {
                             <button onClick={this.addToImagesArray}>ADD PHOTO</button>
                         </div>
                         <div className="image-upload-progress">
-                            <div className="image-preview">
+                            { previewImages }
+                            {/* <div className="image-preview">
                                 <button className="delete-circle">X</button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="add-species-box">
                         <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
-                        <div class="button-container">
+                        <div className="button-container">
                             <button><i className="fas fa-angle-down"></i> Choose from Species List</button>
                             <button onClick={this.showModal}>+ Add New Species</button>
                         </div>
-                        <ul>
-                            <li>SAGE <button className="delete-circle">X</button></li>
-                            <li>JUNIPER <button className="delete-circle">X</button></li>
-                            <li>SWEETGRASS <button className="delete-circle">X</button></li>
-                        </ul>
+                        <ul> { previewSpecies } </ul>
                     </div>
                     <h2>DESCRIPTION:</h2>
                     <textarea rows="12" cols="70" onChange={this.handleInputChange} name="description" placeholder="Write to your heart’s content about this foraging trip: where you went, what you found, essential gear you packed, new species you learned or discovered for the first time…"></textarea>
@@ -130,7 +127,6 @@ class AddAdventure extends Component {
                                 this.postAdventureToServer : () => alert("Please fill out all fields to add a new adventure") } 
                         > SAVE ADVENTURE
                         </button>
-                        {/* <button onClick={this.toggleRedirect}>CANCEL</button> */}
                     </div>
                 </div>
             </div>

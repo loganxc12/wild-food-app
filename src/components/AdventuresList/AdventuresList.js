@@ -45,7 +45,7 @@ class AdventuresList extends Component {
                                                   <h2>{adventure.title}</h2>
                                              </Link>
                                         </div>
-                                        <img src={adventureMenu} />
+                                        {/* <img src={adventureMenu} /> */}
                                         {/* <p>{el.date}</p>
                                         <p>{el.location}</p>
                                         <p>{el.description}</p> */}
@@ -59,6 +59,7 @@ class AdventuresList extends Component {
           return (
                <div className="list-wrapper">
                     { adventuresToDisplay }
+                    <Link to="/adventure/add"><i className="fas fa-plus-circle"></i></Link>
                </div>
           );
      }

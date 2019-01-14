@@ -21,7 +21,7 @@ class SpeciesModal extends Component {
                          <div className="modal-img">
                          </div>
                          <div className="species-content">
-                              <a className="close-btn" onClick={hide}>X</a>
+                              <a className="close-btn" onClick={ () => hide("showSpeciesModal") }>X</a>
                               <header>
                                    <h2>STINGING NETTLE</h2>
                               </header>

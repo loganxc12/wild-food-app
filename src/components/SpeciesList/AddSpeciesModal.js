@@ -6,9 +6,8 @@ class AddSpeciesModal extends Component {
           this.state = {
                name: "",
                scientificName: "",
-               season: "",
-               description: "",
-               imageUrl: ""
+               imageUrl: "",
+               description: ""
           }
           this.handleInputChange = this.handleInputChange.bind(this);
           this.modalSubmit = this.modalSubmit.bind(this);
@@ -21,21 +20,21 @@ class AddSpeciesModal extends Component {
      }
 
      modalSubmit() {
-          const { name, scientificName, season, description, imageUrl } = this.state;
+          const { name, scientificName, imageUrl, description } = this.state;
           const { hide, addSpecies } = this.props;
-          addSpecies(name, scientificName, season, description, imageUrl);
+          addSpecies(name, scientificName, imageUrl, description);
           hide();
      }
 
      render() {
-          const { name, scientificName, season, description, imageUrl } = this.state;
+          const { name, scientificName, description, imageUrl } = this.state;
           const { show, hide } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
           return show ? (
                <div className={showHideClassName}>
                     <section className="modal-main">
                          <div className="modal-content">
-                              <a className="close-btn" onClick={hide}>X</a>
+                              <a className="close-btn" onClick={ () => hide("showAddModal") }>X</a>
                               <header>
                                    <h2>ADD A NEW SPECIES</h2>
                                    <button>+ Upload Featured Image</button>
@@ -43,11 +42,10 @@ class AddSpeciesModal extends Component {
                               <form>
                                    <input onChange={this.handleInputChange} name="name" placeholder="Common Name"></input>
                                    <input onChange={this.handleInputChange} name="scientificName" placeholder="Scientific name"></input>
-                                   {/* <input onChange={this.handleInputChange} name="season" placeholder="Season"></input> */}
+                                   <input onChange={this.handleInputChange} name="imageUrl" placeholder="Image URL"></input>
                                    <textarea onChange={this.handleInputChange} name="description" placeholder="Description (habitat, identification, recipes, look-alikes…)"></textarea>
-                                   {/* <input onChange={this.handleInputChange} name="imageUrl" placeholder="Image URL"></input> */}
                               <button 
-                                   onClick={ (name && scientificName && season && description && imageUrl) ? 
+                                   onClick={ (name && scientificName && description && imageUrl) ? 
                                         this.modalSubmit : () => alert("Please fill out all fields to add a new species") } 
                               >SAVE SPECIES
                               </button>

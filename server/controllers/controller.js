@@ -13,6 +13,7 @@ module.exports = {
                     //Get all species stored in db for user in session.
                     dbInstance.read_species([ user_id ])
                          .then(allSpeciesInDb => {
+                              console.log("---allSpecies", allSpeciesInDb);
                               //Loop over species array passed with Adventure (in req.body) and check each species 
                               //object against array of All species.
                               species.forEach(item => {
@@ -26,9 +27,10 @@ module.exports = {
                                    } 
                                    //If no match, first create a new entry in the species table and then create a new line_items entry.
                                    else {
-                                        const { name, scientificName, season, imageUrl, description } = item;
-                                        dbInstance.create_species([ name, scientificName, season, imageUrl, description, user_id ])
+                                        const { name, scientificName, imageUrl, description } = item;
+                                        dbInstance.create_species([ name, scientificName, imageUrl, description, user_id ])
                                              .then(species => {
+                                                  console.log("---newlyCreatedSpecies", species);
                                                   dbInstance.create_line_item([ species[0].id, adventure.id ])
                                              })
                                    }

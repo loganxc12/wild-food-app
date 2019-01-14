@@ -222,6 +222,14 @@ $text-light: #9B9B9B;
   flex-wrap: wrap;
   position: relative;
 
+  i {
+    position: fixed; 
+    bottom: 50px;
+    right: 50px;
+    font-size: 65px;
+    color: $green;
+  }
+
   .list-item-wrapper {
     position: relative;
     width: 33.33%;
@@ -230,7 +238,7 @@ $text-light: #9B9B9B;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url("./images/blackberries.jpg");
+    // background-image: url("./images/blackberries.jpg");
     background-size: cover;
     font-family: $heading-font;
     font-weight: 700;
@@ -349,9 +357,8 @@ $text-light: #9B9B9B;
           position: relative;
           width: 65px;
           height: 65px;
-          background-image: url("./images/upload-preview.jpg");
-          background-size: cover;
-          background-color: white;
+          // background-image: url("./images/upload-preview.jpg");
+          // background-size: cover;
           margin-left: 15px; 
 
           button {
@@ -367,6 +374,7 @@ $text-light: #9B9B9B;
     .add-species-box {
       ul {
         line-height: 38px;
+        font-weight: 700;
       }
     }
 
@@ -376,7 +384,7 @@ $text-light: #9B9B9B;
       justify-content: center;
       button {
         @extend %button;
-        padding: 13px 35px;
+        padding: 18px 35px;
       }
     }
 
