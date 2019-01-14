@@ -35,6 +35,14 @@ $text-light: #9B9B9B;
   display: flex;
 }
 
+%input-box {
+  font-family: $heading-font;
+  letter-spacing: 0.02em;
+  line-height: 22px;
+  color: #9b9b9b;
+  border: 2px solid rgba(155, 155, 155, 0.274);
+}
+
 /* GLOBAL STYLES */
 
 .App {
@@ -213,9 +221,6 @@ $text-light: #9B9B9B;
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  font-family: $heading-font;
-  font-weight: 700;
-  color: #fff;
 
   .list-item {
     position: relative;
@@ -227,6 +232,10 @@ $text-light: #9B9B9B;
     align-items: center;
     background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/blackberries.jpg");
     background-size: cover;
+    font-family: $heading-font;
+    font-weight: 700;
+    color: #fff;
+
       .title * {
         margin: 7px;
         cursor: pointer;
@@ -278,14 +287,11 @@ $text-light: #9B9B9B;
     }
 
     input, textarea {
+      @extend %input-box;
       margin: 10px;
       padding: 15px;
       font-size: 16px;
-      font-family: $heading-font;
-      letter-spacing: 0.02em;
-      line-height: 22px;
-      color: #9b9b9b;
-      border: 2px solid rgba(155, 155, 155, 0.274);
+      resize: none;
     }
 
     .button-container {
@@ -423,6 +429,7 @@ $text-light: #9B9B9B;
 .adventure-overview, .description-box {
   display: flex;
   width: 100%;
+  color: $dark;
 
   .species-box {
     display: flex;
@@ -470,7 +477,7 @@ $text-light: #9B9B9B;
 }
 
 
-/* MODAL */
+/* ADD SPECIES MODAL */
 
 .modal {
   position: fixed;
@@ -488,28 +495,30 @@ $text-light: #9B9B9B;
   display: flex;
   position:fixed;
   background: white;
-  width: 57%;
-  height: 70vh;
+  width: 65%;
+  height: 75vh;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
   z-index: 1000;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+
+  a.close-btn {
+    position: absolute;
+    top: 14px;
+    right: 24px;
+    cursor: pointer;
+    font-size: 18px;
+  }
 
   .modal-content {
     width: 100%;
-    margin: 30px 50px;
+    margin: 25px 50px;
+    margin-bottom: 33px;
     display: flex;
     flex-direction: column;
     text-align: left;
-
-    a {
-      position: absolute;
-      top: 14px;
-      right: 24px;
-      cursor: pointer;
-      font-size: 18px;
-    }
 
     header {
       width: 100%;
@@ -519,7 +528,7 @@ $text-light: #9B9B9B;
       button {
         @extend %form-button;
         margin: 15px;
-        padding: 14px 25px;
+        padding: 14px 35px;
       }
 
     }
@@ -528,16 +537,71 @@ $text-light: #9B9B9B;
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
-      margin-top: 15px;
-      // height: 100%;
+      margin: 5px 0px;
+      
+      input, textarea {
+        @extend %input-box;
+        margin: 7px 0;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      textarea {
+        flex: 1 1 auto;
+        resize: none;
+      }
+
+      button {
+        @extend %button;
+        padding: 12px 27px;
+        margin: 0 auto;
+        margin-top: 12px;
+      }
+
     }
 
+  }
 
+  .modal-img {
+      width: calc(100% / 5 * 2);
+      background-size: cover;
+      box-sizing: border-box;
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Brennnessel_1.JPG/1200px-Brennnessel_1.JPG"); 
+  }
 
-    // input {
-    //   margin: 10px 0;
-    // }
+  .species-content {
+    position: relative;
+    width: calc(100% / 5 * 3);
+
+    header {
+      color: $dark;
+      letter-spacing: 0.03em;
+      font-size: 18px;
+      margin-top: 40px;
+    }
+
+    section {
+      margin: 25px 25px;
+      text-align: left;
+      letter-spacing: 0.02em;
+      line-height: 20px;
+      
+      span {
+        color: $text-light;
+      }
+    }
+
+    i {
+      color: $dark;
+      font-size: 30px;
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+    }
 
   }
 
 }
+
+/* SINGLE SPECIES MODAL */
+

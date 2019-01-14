@@ -2,12 +2,18 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { updateSpecies } from "../../ducks/reducer";
+import SpeciesModal from "./SpeciesModal";
 import speciesMenu from "./eye.png";
 
 class SpeciesList extends Component {
      constructor(props) {
           super(props);
+          this.state = {
+               showModal: false
+          }
           this.getSpeciesFromServer = this.getSpeciesFromServer.bind(this);
+          this.showModal = this.showModal.bind(this);
+          this.hideModal = this.hideModal.bind(this);
      }
 
      componentDidMount() {
@@ -21,9 +27,19 @@ class SpeciesList extends Component {
           })
      }
 
+     showModal() {
+          this.setState({ showModal: true })
+     }
+
+     hideModal() {
+          this.setState({ showModal: false})
+     }
+
      render() {
           //Pulling down species array from Redux and mapping over/conditionally rendering.
+          const { showModal } = this.state;
           const { species } = this.props;
+
           let speciesToDisplay;
           if (species !== null) {
                if (species.length) {
@@ -33,7 +49,7 @@ class SpeciesList extends Component {
                                    <p>{el.scientific_name}</p>
                                    <h2>{el.name}</h2>
                               </div>
-                              <img src={speciesMenu} className="eye-menu" />
+                              <img onClick={this.showModal} src={speciesMenu} className="eye-menu" />
                          </div> 
                     );
                } else { speciesToDisplay = <h3>Looks like you haven't added any species yet.</h3> }
@@ -41,6 +57,11 @@ class SpeciesList extends Component {
 
           return (
                <div className="list-wrapper">
+                    <SpeciesModal 
+                         show={showModal}
+                         hide={this.hideModal}
+                         // addSpecies={this.addToSpeciesArray}
+                    />
                     { speciesToDisplay }
                </div>
           );
