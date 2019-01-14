@@ -10,7 +10,7 @@ class Header extends Component {
      constructor(props) {
           super(props);
           this.state = {
-            dropdown: false
+            dropdown: true
           }
           this.logout = this.logout.bind(this);
      }

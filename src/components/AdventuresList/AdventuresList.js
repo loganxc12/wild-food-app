@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import moment from "moment";
 import { updateAdventures} from "../../ducks/reducer";
 import adventureMenu from "./menu-button.png";
 
@@ -17,7 +18,6 @@ class AdventuresList extends Component {
 
      getAdventuresFromServer() {
           axios.get("/api/adventures").then(response => {
-               console.log(response);
                const { updateAdventures } = this.props;
                updateAdventures(response.data);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
           })
@@ -26,23 +26,33 @@ class AdventuresList extends Component {
      render() {
           //Pulling down adventures array from Redux and mapping over/conditionally rendering.
           const { adventures } = this.props;
+
           let adventuresToDisplay;
+          
           if (adventures !== null) {
                if (adventures.length) {
-                    adventuresToDisplay = adventures.map(el => 
-                              <div key={el.id} className="list-item">
-                                   <div className="title">
-                                        <p>06/27/2018</p>
-                                        <Link to={`/adventure/${el.id}`} style={{textDecoration: "none", color: "white"}}>
-                                             <h2>{el.title}</h2>
-                                        </Link>
+                    adventuresToDisplay = adventures.map(adventure => {
+                         let adventureStyle = {
+                              background: `linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)),url('${adventure.images[0]}')`,
+                              backgroundSize: "cover",
+                         }
+                         return (
+                              <div key={adventure.id} className="list-item-wrapper">
+                                   <div className="list-item" style={adventureStyle}>
+                                        <div className="title">
+                                             <p>{moment(adventure.date).format("MM/DD/YYYY")}</p>
+                                             <Link to={`/adventure/${adventure.id}`} style={{textDecoration: "none", color: "white", margin: 0}}>
+                                                  <h2>{adventure.title}</h2>
+                                             </Link>
+                                        </div>
+                                        <img src={adventureMenu} />
+                                        {/* <p>{el.date}</p>
+                                        <p>{el.location}</p>
+                                        <p>{el.description}</p> */}
                                    </div>
-                                   <img src={adventureMenu} />
-                                   {/* <p>{el.date}</p>
-                                   <p>{el.location}</p>
-                                   <p>{el.description}</p> */}
                               </div> 
-                    );
+                         );
+                    });
                } else { adventuresToDisplay = <h3>Looks like you haven't added any adventures yet.</h3> }
           } else { adventuresToDisplay = <h3>Loading...</h3> }
          

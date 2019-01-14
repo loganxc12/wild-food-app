@@ -41,17 +41,26 @@ class SpeciesList extends Component {
           const { species } = this.props;
 
           let speciesToDisplay;
+
           if (species !== null) {
                if (species.length) {
-                    speciesToDisplay = species.map(el => 
-                         <div key={el.id} className="list-item">
-                              <div className="title">
-                                   <p>{el.scientific_name}</p>
-                                   <h2>{el.name}</h2>
-                              </div>
-                              <img onClick={this.showModal} src={speciesMenu} className="eye-menu" />
-                         </div> 
-                    );
+                    speciesToDisplay = species.map(species => {
+                         let speciesStyle = {
+                              background: `linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)),url('${species.image_url}')`,
+                              backgroundSize: "cover",
+                         }
+                         return (
+                              <div key={species.id} className="list-item-wrapper">
+                                   <div className="list-item" style={speciesStyle}>
+                                        <div className="title">
+                                             <p>{species.scientific_name}</p>
+                                             <h2>{species.name}</h2>
+                                        </div>
+                                        <img onClick={this.showModal} src={speciesMenu} className="eye-menu" />
+                                   </div>
+                              </div> 
+                         );
+                    });
                } else { speciesToDisplay = <h3>Looks like you haven't added any species yet.</h3> }
           } else { speciesToDisplay = <h3>Loading...</h3> }
 
