@@ -43,6 +43,33 @@ $text-light: #9B9B9B;
   border: 2px solid rgba(155, 155, 155, 0.274);
 }
 
+%edit-box {
+  display: flex;
+  position: absolute;
+  width: 130px;
+  height: 38px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+}
+
+%edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  background-color: rgba(90, 210, 152, 0.555);
+}
+
+%delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  background-color: rgba(255, 114, 67, 0.555);
+}
+
 /* GLOBAL STYLES */
 
 .App {
@@ -228,6 +255,7 @@ $text-light: #9B9B9B;
     right: 50px;
     font-size: 65px;
     color: $green;
+    cursor: pointer;
   }
 
   .list-item-wrapper {
@@ -398,12 +426,32 @@ $text-light: #9B9B9B;
   font-family: $heading-font;
 
   .settings-box {
+    display: flex;
+    justify-content: flex-end;
     text-align: right;
-    padding: 30px 60px;
-    font-size: 35px;
+    align-items: center;
+    height: 75px;
+    font-size: 30px;
     color: $dark;
+    margin-bottom: 50px;
+
+    .edit-delete-box {
+      @extend %edit-box;
+      right: 85px;
+      margin-bottom: 5px;
+    }
+
+    .edit {
+      @extend %edit;
+    }
+
+    .delete {
+      @extend %delete;
+    }
 
     i {
+      position: absolute;
+      right: 50px;
       cursor: pointer;
     }
   }
@@ -547,6 +595,10 @@ $text-light: #9B9B9B;
     flex-direction: column;
     text-align: left;
 
+    h2 {
+      font-size: 26px;
+    }
+
     header {
       width: 100%;
       display: flex;
@@ -618,6 +670,20 @@ $text-light: #9B9B9B;
       }
     }
 
+    .edit-delete-box {
+      @extend %edit-box;
+      bottom: 36px;
+      right: 75px;
+
+      .edit {
+        @extend %edit;
+      }
+
+      .delete {
+        @extend %delete;
+      }
+    }
+
     i {
       color: $dark;
       font-size: 30px;
@@ -625,6 +691,11 @@ $text-light: #9B9B9B;
       bottom: 40px;
       right: 40px;
     }
+
+    
+
+    
+
 
   }
 

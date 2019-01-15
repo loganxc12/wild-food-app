@@ -28,10 +28,12 @@ app.get("/auth/user-data", authController.getUser);
 app.post("/auth/logout", authController.logout);
 //Get adventures from database
 app.get("/api/adventures", controller.readAdventures);
-//Posting new adventure
+//Post new adventure
 app.post("/api/adventures", controller.postAdventure);
 //Get species from database
 app.get("/api/species", controller.readSpecies);
+//Post new species
+app.post("/api/species", controller.postSpecies);
 
 
 const PORT = 4000;

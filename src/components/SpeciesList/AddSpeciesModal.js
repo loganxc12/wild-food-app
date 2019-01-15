@@ -45,8 +45,8 @@ class AddSpeciesModal extends Component {
                                    <input onChange={this.handleInputChange} name="imageUrl" placeholder="Image URL"></input>
                                    <textarea onChange={this.handleInputChange} name="description" placeholder="Description (habitat, identification, recipes, look-alikes…)"></textarea>
                               <button 
-                                   onClick={ (name && scientificName && description && imageUrl) ? 
-                                        this.modalSubmit : () => alert("Please fill out all fields to add a new species") } 
+                                   onClick={ (name && scientificName && imageUrl && description) ? 
+                                   this.modalSubmit : () => alert("Please fill out all fields to add a new species") } 
                               >SAVE SPECIES
                               </button>
                               </form>

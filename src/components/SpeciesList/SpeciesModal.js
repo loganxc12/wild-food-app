@@ -34,6 +34,10 @@ class SpeciesModal extends Component {
                                    a herbaceous perennial flowering plant in the family Urticaceae.</span></p>
                               </section>
                               <div className="settings-box">
+                                   <div className="edit-delete-box">
+                                        <div className="edit">EDIT</div>
+                                        <div className="delete">DELETE</div>
+                                   </div>
                                    <i className="fas fa-cog"></i>
                               </div>
                          </div>

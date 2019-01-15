@@ -66,7 +66,20 @@ module.exports = {
           dbInstance.read_species([ user_id ])
                .then(species => res.status(200).send(species))
                .catch(error => {
-                    res.status(500).send({errorMessage: "Error in readAdventures method"});
+                    res.status(500).send({errorMessage: "Error in readSpecies method"});
+                    console.log(error);
+               })
+     },
+
+     postSpecies: (req, res) => {
+          const dbInstance = req.app.get("db");
+          const { name, scientificName, imageUrl, description } = req.body;
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.create_species([ name, scientificName, imageUrl, description, user_id ])
+               .then(species => res.status(200).send(species))
+               .catch(error => {
+                    res.status(500).send({errorMessage: "Error in postSpecies method"});
                     console.log(error);
                })
      }

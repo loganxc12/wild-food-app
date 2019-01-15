@@ -55,6 +55,10 @@ class Adventure extends Component {
                          </div>
                     </div>
                     <div className="settings-box">
+                         <div className="edit-delete-box">
+                              <div className="edit">EDIT</div>
+                              <div className="delete">DELETE</div>
+                         </div>
                          <i className="fas fa-cog"></i>
                     </div>               
                </div>

@@ -14,6 +14,7 @@ class SpeciesList extends Component {
                showSpeciesModal: false
           }
           this.getSpeciesFromServer = this.getSpeciesFromServer.bind(this);
+          this.postSpeciesToServer = this.postSpeciesToServer.bind(this);
           this.showModal = this.showModal.bind(this);
           this.hideModal = this.hideModal.bind(this);
      }
@@ -26,6 +27,14 @@ class SpeciesList extends Component {
           axios.get("/api/species").then(response => {
                const { updateSpecies } = this.props;
                updateSpecies(response.data);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+          })
+     }
+
+     postSpeciesToServer(name, scientificName, imageUrl, description) {
+          const newSpecies = { name, scientificName, imageUrl, description };
+          axios.post("/api/species", newSpecies).then(response => {
+               const { updateSpecies } = this.props;
+               updateSpecies(response.data);
           })
      }
 
@@ -54,11 +63,10 @@ class SpeciesList extends Component {
                          return (
                               <div key={species.id} className="list-item-wrapper">
                                    <div className="list-item" style={speciesStyle}>
-                                        <div className="title">
+                                        <div onClick={ () => this.showModal("showSpeciesModal") } className="title">
                                              <p>{species.scientific_name}</p>
                                              <h2>{species.name}</h2>
                                         </div>
-                                        <img onClick={ () => this.showModal("showSpeciesModal") } src={speciesMenu} className="eye-menu" />
                                    </div>
                               </div> 
                          );
@@ -71,6 +79,7 @@ class SpeciesList extends Component {
                     <AddSpeciesModal 
                          show={showAddModal}
                          hide={this.hideModal}
+                         addSpecies={this.postSpeciesToServer}
                     />
                     <SpeciesModal 
                          show={showSpeciesModal}
