@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class SpeciesModal extends Component {
      constructor(props) {
@@ -13,25 +14,23 @@ class SpeciesModal extends Component {
      }
 
      render() {
-          const { show, hide } = this.props;
+          const { show, hide, modalId, species } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
+          const speciesToDisplay = show ? species.filter(species => species.id === modalId)[0] : null;
           return show ? (
                <div className={showHideClassName}>
                     <section className="modal-main">
                          <div className="modal-img">
+                              <img src={speciesToDisplay.image_url} alt="selected species" />
                          </div>
                          <div className="species-content">
                               <a className="close-btn" onClick={ () => hide("showSpeciesModal") }>X</a>
                               <header>
-                                   <h2>STINGING NETTLE</h2>
+                                   <h2>{speciesToDisplay.name.toUpperCase()}</h2>
                               </header>
                               <section>
-                              <p><strong>SCIENTIFIC NAME: </strong><span>Urtica dioica</span></p>
-                              <p><strong>DESCRIPTION: </strong><span>Urtica dioica, often called common nettle, stinging nettle (although not all plants of this 
-                                   species sting) or nettle leaf, is a herbaceous perennial flowering plant in the family Urticaceae.
-
-                                   Urtica dioica, often called common nettle, stinging nettle (although not all plants of this species sting) or nettle leaf, is 
-                                   a herbaceous perennial flowering plant in the family Urticaceae.</span></p>
+                              <p><strong>SCIENTIFIC NAME: </strong><span>{speciesToDisplay.scientific_name}</span></p>
+                              <p><strong>DESCRIPTION: </strong><span>{speciesToDisplay.description}</span></p>
                               </section>
                               <div className="settings-box">
                                    <div className="edit-delete-box">
@@ -48,4 +47,9 @@ class SpeciesModal extends Component {
      
 }
 
-export default SpeciesModal;
+function mapStateToProps(reduxState) {
+     const { species } = reduxState;
+     return { species };
+}
+
+export default connect(mapStateToProps)(SpeciesModal);

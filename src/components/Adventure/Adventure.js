@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
+import SpeciesModal from "../SpeciesList/SpeciesModal";
 
 class Adventure extends Component {
 
@@ -8,9 +9,13 @@ class Adventure extends Component {
           super(props);
           this.state = {
                adventure: "",
-               species: []
+               species: [],
+               showSpeciesModal: false,
+               modalId: 0
           }
           this.getSingleAdventureFromServer = this.getSingleAdventureFromServer.bind(this);
+          this.showModal = this.showModal.bind(this);
+          this.hideModal = this.hideModal.bind(this);
      }
 
      componentDidMount() {
@@ -20,7 +25,6 @@ class Adventure extends Component {
 
      getSingleAdventureFromServer(id) {
           axios.get(`/api/adventures/${id}`).then(response => {
-               console.log(response);
                     this.setState({
                          adventure: response.data.adventures[0],
                          species: response.data.species
@@ -28,8 +32,19 @@ class Adventure extends Component {
           })
      }
 
+     showModal(modal, id) {
+          this.setState({ 
+               [modal]: true,
+               modalId: id
+          })
+     }
+
+     hideModal(modal) {
+          this.setState({ [modal]: false})
+     }
+
      render() {
-          const { adventure, species } = this.state;
+          const { adventure, species, showSpeciesModal, modalId } = this.state;
           
           let adventureStyle = adventure ? {
                background: `linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)),url('${adventure.images[0]}')`,
@@ -38,6 +53,11 @@ class Adventure extends Component {
 
           const adventureToDisplay = adventure ? (
                <div className="adventure-wrapper">
+                    <SpeciesModal 
+                         show={showSpeciesModal}
+                         hide={this.hideModal}
+                         modalId={modalId}
+                    />
                     <div className="adventure-hero" style={adventureStyle}>
                          <div className="adventure-title-wrapper">
                               <h1>{adventure.title.toUpperCase()}</h1>
@@ -56,7 +76,11 @@ class Adventure extends Component {
                               <div className="species-box-content">
                                    <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
                                    <ul>
-                                        { species.map(el => <li>{el.name.toUpperCase()} <i className="fas fa-long-arrow-alt-right"></i></li>) }
+                                        { species.map(el => 
+                                             <div key={el.id} onClick={() => this.showModal("showSpeciesModal", el.id)}>
+                                                  <li>{el.name.toUpperCase()} <i className="fas fa-long-arrow-alt-right"></i></li>
+                                             </div>
+                                        ) }
                                    </ul>
                               </div>
                          </div>

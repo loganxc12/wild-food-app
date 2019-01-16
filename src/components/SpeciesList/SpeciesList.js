@@ -4,30 +4,18 @@ import { connect } from "react-redux";
 import { updateSpecies } from "../../ducks/reducer";
 import AddSpeciesModal from "./AddSpeciesModal";
 import SpeciesModal from "./SpeciesModal";
-import speciesMenu from "./eye.png";
 
 class SpeciesList extends Component {
      constructor(props) {
           super(props);
           this.state = {
                showAddModal: false,
-               showSpeciesModal: false
+               showSpeciesModal: false,
+               modalId: 0 
           }
-          this.getSpeciesFromServer = this.getSpeciesFromServer.bind(this);
           this.postSpeciesToServer = this.postSpeciesToServer.bind(this);
           this.showModal = this.showModal.bind(this);
           this.hideModal = this.hideModal.bind(this);
-     }
-
-     componentDidMount() {
-          this.getSpeciesFromServer();
-     }
-
-     getSpeciesFromServer() {
-          axios.get("/api/species").then(response => {
-               const { updateSpecies } = this.props;
-               updateSpecies(response.data);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-          })
      }
 
      postSpeciesToServer(name, scientificName, imageUrl, description) {
@@ -38,8 +26,11 @@ class SpeciesList extends Component {
           })
      }
 
-     showModal(modal) {
-          this.setState({ [modal]: true })
+     showModal(modal, id) {
+          this.setState({ 
+               [modal]: true,
+               modalId: id
+          })
      }
 
      hideModal(modal) {
@@ -48,7 +39,7 @@ class SpeciesList extends Component {
 
      render() {
           //Pulling down species array from Redux and mapping over/conditionally rendering.
-          const { showAddModal, showSpeciesModal } = this.state;
+          const { showAddModal, showSpeciesModal, modalId } = this.state;
           const { species } = this.props;
 
           let speciesToDisplay;
@@ -62,8 +53,8 @@ class SpeciesList extends Component {
                          }
                          return (
                               <div key={species.id} className="list-item-wrapper">
-                                   <div className="list-item" style={speciesStyle}>
-                                        <div onClick={ () => this.showModal("showSpeciesModal") } className="title">
+                                   <div onClick={ () => this.showModal("showSpeciesModal", species.id) } className="list-item" style={speciesStyle}>
+                                        <div className="title">
                                              <p>{species.scientific_name}</p>
                                              <h2>{species.name}</h2>
                                         </div>
@@ -84,7 +75,7 @@ class SpeciesList extends Component {
                     <SpeciesModal 
                          show={showSpeciesModal}
                          hide={this.hideModal}
-                         // addSpecies={this.addToSpeciesArray}
+                         modalId={modalId}
                     />
                     { speciesToDisplay }
                     <i onClick={ () => this.showModal("showAddModal")} className="fas fa-plus-circle"></i>

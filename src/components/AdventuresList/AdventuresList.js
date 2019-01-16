@@ -1,27 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
 import { updateAdventures} from "../../ducks/reducer";
-import adventureMenu from "./menu-button.png";
 
 class AdventuresList extends Component {
-     constructor(props) {
-          super(props);
-          this.getAdventuresFromServer = this.getAdventuresFromServer.bind(this);
-     }
-
-     componentDidMount() {
-          this.getAdventuresFromServer();
-     }
-
-     getAdventuresFromServer() {
-          axios.get("/api/adventures").then(response => {
-               const { updateAdventures } = this.props;
-               updateAdventures(response.data);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-          })
-     }
 
      render() {
           //Pulling down adventures array from Redux and mapping over/conditionally rendering.
@@ -38,19 +21,15 @@ class AdventuresList extends Component {
                          }
                          return (
                               <div key={adventure.id} className="list-item-wrapper">
-                                   <div className="list-item" style={adventureStyle}>
-                                        <div className="title">
-                                             <p>{moment(adventure.date).format("MM/DD/YYYY")}</p>
-                                             <Link to={`/adventure/${adventure.id}`} style={{textDecoration: "none", color: "white", margin: 0}}>
+                                   <Link to={`/adventure/${adventure.id}`}>
+                                        <div className="list-item" style={adventureStyle}>
+                                             <div className="title">
+                                                  <p>{moment(adventure.date).format("MM/DD/YYYY")}</p>
                                                   <h2>{adventure.title}</h2>
-                                             </Link>
+                                             </div>
                                         </div>
-                                        {/* <img src={adventureMenu} /> */}
-                                        {/* <p>{el.date}</p>
-                                        <p>{el.location}</p>
-                                        <p>{el.description}</p> */}
-                                   </div>
-                              </div> 
+                                   </Link>
+                              </div>
                          );
                     });
                } else { adventuresToDisplay = <h3>Looks like you haven't added any adventures yet.</h3> }
