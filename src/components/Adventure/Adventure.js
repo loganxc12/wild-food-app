@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { updateAdventures } from "../../ducks/reducer"; 
+import { confirmAlert } from "react-confirm-alert"; 
+import "react-confirm-alert/src/react-confirm-alert.css"; 
 import SpeciesModal from "../SpeciesList/SpeciesModal";
 
 class Adventure extends Component {
@@ -11,11 +16,13 @@ class Adventure extends Component {
                adventure: "",
                species: [],
                showSpeciesModal: false,
-               modalId: 0
+               modalId: 0,
+               redirect: false
           }
           this.getSingleAdventureFromServer = this.getSingleAdventureFromServer.bind(this);
           this.showModal = this.showModal.bind(this);
           this.hideModal = this.hideModal.bind(this);
+          this.confirmDelete = this.confirmDelete.bind(this);
      }
 
      componentDidMount() {
@@ -25,10 +32,10 @@ class Adventure extends Component {
 
      getSingleAdventureFromServer(id) {
           axios.get(`/api/adventures/${id}`).then(response => {
-                    this.setState({
-                         adventure: response.data.adventures[0],
-                         species: response.data.species
-                    })
+               this.setState({
+                    adventure: response.data.adventures[0],
+                    species: response.data.species
+               })
           })
      }
 
@@ -43,8 +50,38 @@ class Adventure extends Component {
           this.setState({ [modal]: false})
      }
 
+     deleteAdventureFromServer(id) {
+          axios.delete(`/api/adventures/${id}`).then(response => {
+               console.log(response);
+               const { updateAdventures } = this.props;
+               updateAdventures(response.data);
+               this.setState({ redirect: true });
+          })
+     }
+
+     confirmDelete(id) {
+          confirmAlert({
+            title: "Confirm",
+            message: "Are you sure you want to permenently delete this adventure?",
+            buttons: [
+              {
+                label: "Yes",
+                onClick: () => this.deleteAdventureFromServer(id)
+              },
+              {
+                label: "No",
+                onClick: () => alert("Clicked No")
+              }
+            ]
+          })
+     }
+
      render() {
-          const { adventure, species, showSpeciesModal, modalId } = this.state;
+          const { adventure, species, showSpeciesModal, modalId, redirect } = this.state;
+
+          if (redirect) {
+               return <Redirect to="/dash" />;
+          }
           
           let adventureStyle = adventure ? {
                background: `linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)),url('${adventure.images[0]}')`,
@@ -97,7 +134,7 @@ class Adventure extends Component {
                     <div className="settings-box">
                          <div className="edit-delete-box">
                               <div className="edit">EDIT</div>
-                              <div className="delete">DELETE</div>
+                              <div onClick={() => this.confirmDelete(adventure.id)} className="delete">DELETE</div>
                          </div>
                          <i className="fas fa-cog"></i>
                     </div>               
@@ -109,4 +146,4 @@ class Adventure extends Component {
      
 }
 
-export default Adventure;
+export default connect(null, { updateAdventures })(Adventure);

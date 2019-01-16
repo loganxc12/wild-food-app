@@ -59,6 +59,7 @@ $text-light: #9B9B9B;
   height: 100%;
   width: 50%;
   background-color: rgba(90, 210, 152, 0.555);
+  cursor: pointer;
 }
 
 %delete {
@@ -68,6 +69,7 @@ $text-light: #9B9B9B;
   height: 100%;
   width: 50%;
   background-color: rgba(255, 114, 67, 0.555);
+  cursor: pointer;
 }
 
 /* GLOBAL STYLES */
@@ -668,6 +670,8 @@ $text-light: #9B9B9B;
   }
 
   .species-content {
+    display: flex;
+    flex-direction: column;
     position: relative;
     width: calc(100% / 5 * 3);
 
@@ -675,14 +679,31 @@ $text-light: #9B9B9B;
       color: $dark;
       letter-spacing: 0.03em;
       font-size: 18px;
-      margin-top: 40px;
+      margin-top: 10px;
     }
 
     section {
-      margin: 25px 25px;
+      display: flex;
+      flex-direction: column;
+      margin: 0 25px;
       text-align: left;
       letter-spacing: 0.02em;
       line-height: 20px;
+      flex: 1 1 auto;
+
+      input, textarea {
+        @extend %input-box;
+        width: 100%;
+        font-size: 14px;
+        box-sizing: border-box;
+        padding: 7px;
+      }
+
+      textarea {
+        flex: 1 1 auto;
+        margin-bottom: 105px;
+        resize: none;
+      }
       
       span {
         color: $text-light;

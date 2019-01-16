@@ -23,7 +23,7 @@ module.exports = {
                                    })
                                    //If there's a match (if species already exists for user), just create new line_items entry.
                                    if (match) {
-                                        dbInstance.create_line_item([ match.id, adventure.id ])
+                                        dbInstance.create_line_item([ match.id, adventure.id, user_id ])
                                    } 
                                    //If no match, first create a new entry in the species table and then create a new line_items entry.
                                    else {
@@ -31,7 +31,7 @@ module.exports = {
                                         dbInstance.create_species([ name, scientificName, imageUrl, description, user_id ])
                                              .then(species => {
                                                   console.log("---newlyCreatedSpecies", species);
-                                                  dbInstance.create_line_item([ species[0].id, adventure.id ])
+                                                  dbInstance.create_line_item([ species[0].id, adventure.id, user_id ])
                                              })
                                    }
                               })
@@ -101,6 +101,32 @@ module.exports = {
                .then(species => res.status(200).send(species))
                .catch(error => {
                     res.status(500).send({errorMessage: "Error in postSpecies method"});
+                    console.log(error);
+               })
+     },
+
+     deleteSpecies: (req, res) => {
+          const { id } = req.params;
+          const dbInstance = req.app.get("db");
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.delete_species([ id, user_id ])
+               .then(species => res.status(200).send(species))
+               .catch( error => {
+                    res.status(500).send({errorMessage: "Error in deleteSpecies method"});
+                    console.log(error);
+               })
+     },
+
+     deleteAdventure: (req, res) => {
+          const { id } = req.params;
+          const dbInstance = req.app.get("db");
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.delete_adventure([ id, user_id ])
+               .then(adventures => res.status(200).send(adventures))
+               .catch( error => {
+                    res.status(500).send({errorMessage: "Error in deleteAdventure method"});
                     console.log(error);
                })
      }

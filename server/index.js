@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const massive = require("massive");
-const connectPg = require("connect-pg-simple");
 const authController = require("./controllers/authController");
 const controller = require("./controllers/controller");
 require("dotenv").config();
@@ -26,16 +25,20 @@ app.get("/auth/callback", authController.login);
 app.get("/auth/user-data", authController.getUser); 
 //Kills session
 app.post("/auth/logout", authController.logout);
-//Get adventures from database
+//Get adventures from db
 app.get("/api/adventures", controller.readAdventures);
-//Get single adventure from database
+//Get single adventure from db
 app.get("/api/adventures/:id", controller.readSingleAdventure);
+//Delete single adventure from db
+app.delete("/api/adventures/:id", controller.deleteAdventure);
 //Post new adventure
 app.post("/api/adventures", controller.postAdventure);
-//Get species from database
+//Get species from db
 app.get("/api/species", controller.readSpecies);
 //Post new species
 app.post("/api/species", controller.postSpecies);
+//Delete single species from db
+app.delete("/api/species/:id", controller.deleteSpecies);
 
 
 const PORT = 4000;

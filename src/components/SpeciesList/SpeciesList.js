@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { updateSpecies } from "../../ducks/reducer";
+import { updateSpecies } from "../../ducks/reducer"; 
 import AddSpeciesModal from "./AddSpeciesModal";
 import SpeciesModal from "./SpeciesModal";
 
