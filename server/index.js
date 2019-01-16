@@ -28,6 +28,8 @@ app.get("/auth/user-data", authController.getUser);
 app.post("/auth/logout", authController.logout);
 //Get adventures from database
 app.get("/api/adventures", controller.readAdventures);
+//Get single adventure from database
+app.get("/api/adventures/:id", controller.readSingleAdventure);
 //Post new adventure
 app.post("/api/adventures", controller.postAdventure);
 //Get species from database

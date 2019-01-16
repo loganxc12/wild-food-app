@@ -1,20 +1,49 @@
 import React, { Component } from "react";
+import axios from "axios";
+import moment from "moment";
 
 class Adventure extends Component {
 
      constructor(props) {
           super(props);
+          this.state = {
+               adventure: "",
+               species: []
+          }
+          this.getSingleAdventureFromServer = this.getSingleAdventureFromServer.bind(this);
+     }
+
+     componentDidMount() {
+          const { id } = this.props.match.params;
+          this.getSingleAdventureFromServer(id);
+     }
+
+     getSingleAdventureFromServer(id) {
+          axios.get(`/api/adventures/${id}`).then(response => {
+               console.log(response);
+                    this.setState({
+                         adventure: response.data.adventures[0],
+                         species: response.data.species
+                    })
+          })
      }
 
      render() {
-          return (
+          const { adventure, species } = this.state;
+          
+          let adventureStyle = adventure ? {
+               background: `linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)),url('${adventure.images[0]}')`,
+               backgroundSize: "cover",
+          } : null;
+
+          const adventureToDisplay = adventure ? (
                <div className="adventure-wrapper">
-                    <div className="adventure-hero">
+                    <div className="adventure-hero" style={adventureStyle}>
                          <div className="adventure-title-wrapper">
-                              <h1>FALL ACORN HARVEST</h1>
+                              <h1>{adventure.title.toUpperCase()}</h1>
                               <div className="adventure-details">
-                                   <h3>OCTOBER 3, 2018</h3>
-                                   <h3><i className="fas fa-map-marker-alt"></i> MAIDEN'S CLIFF, CAMDEN, MAINE</h3>
+                                   <h3>{moment(adventure.date).format("MMMM Do YYYY")}</h3>
+                                   <h3><i className="fas fa-map-marker-alt"></i> {adventure.location}</h3>
                               </div>
                               <div className="adventure-photos">
                                    <button>+ ADD PHOTOS</button>
@@ -27,11 +56,7 @@ class Adventure extends Component {
                               <div className="species-box-content">
                                    <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
                                    <ul>
-                                        <li>ACORN <i className="fas fa-long-arrow-alt-right"></i></li>
-                                        <li>LION'S MANE <i className="fas fa-long-arrow-alt-right"></i></li>
-                                        <li>NANNYBERRY <i className="fas fa-long-arrow-alt-right"></i></li>
-                                        <li>CHAGA <i className="fas fa-long-arrow-alt-right"></i></li>
-                                        <li>JUNIPER <i className="fas fa-long-arrow-alt-right"></i></li>
+                                        { species.map(el => <li>{el.name.toUpperCase()} <i className="fas fa-long-arrow-alt-right"></i></li>) }
                                    </ul>
                               </div>
                          </div>
@@ -42,16 +67,7 @@ class Adventure extends Component {
                     <div className="description-box">
                          <div className="description-box-content">
                               <h2>DESCRIPTION:</h2>
-                              <p>Write to your heart’s content about this foraging trip: where you went, what you found, essential gear you packed, new 
-                              species you learned or discovered for the first time, species you learned or discovered for the first time. for the first time…
-                              Write to your heart’s content about this foraging trip: where you went, what you found, essential gear you packed, new 
-                              species you learned or discovered for the first time, species you learned or discovered for the first time. for the first time…
-
-                              Write to your heart’s content about this foraging trip: where you went, what you found, essential gear you packed, new 
-                              species you learned or discovered for the first time, species you learned or discovered for the first time. for the first time…
-                              Write to your heart’s content about this foraging trip: where you went, what you found, essential gear you packed, new 
-                              species you learned or discovered for the first time, species you learned or discovered for the first time. for the first time
-                              </p>                         
+                              <p>{adventure.description}</p>                         
                          </div>
                     </div>
                     <div className="settings-box">
@@ -62,7 +78,9 @@ class Adventure extends Component {
                          <i className="fas fa-cog"></i>
                     </div>               
                </div>
-          );
+          ) : null;
+
+          return adventureToDisplay;
      }
      
 }

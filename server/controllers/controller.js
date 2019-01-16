@@ -59,6 +59,27 @@ module.exports = {
                })
      },
 
+     readSingleAdventure: (req, res) => {
+          const { id } = req.params;
+          const dbInstance = req.app.get("db");
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.read_single_adventure([ id, user_id ])
+               .then(adventures => {
+                    console.log(adventures)
+                    const { id } = adventures[0];
+                    dbInstance.read_species_for_adventure([ id ])
+                         .then(species => {
+                              console.log(species);
+                              res.status(200).send({ adventures, species });
+                         })
+               })
+               .catch(error => {
+                    res.status(500).send({errorMessage: "Error in readSingleAdventure method"});
+                    console.log(error);
+               })
+     },
+
      readSpecies: (req, res) => {
           const dbInstance = req.app.get("db");
           // const { id } = req.session.user;
