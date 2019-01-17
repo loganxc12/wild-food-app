@@ -37,6 +37,8 @@ app.post("/api/adventures", controller.postAdventure);
 app.get("/api/species", controller.readSpecies);
 //Post new species
 app.post("/api/species", controller.postSpecies);
+//Update single species in db
+app.put("/api/species/:id", controller.updateSpecies);
 //Delete single species from db
 app.delete("/api/species/:id", controller.deleteSpecies);
 

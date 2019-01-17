@@ -10,29 +10,30 @@ class SpeciesModal extends Component {
      constructor(props) {
           super(props);
           this.state = {
-               speciesToDisplay: null,
+               selectedSpecies: null,
                edit: false
           }
           this.handleInputChange = this.handleInputChange.bind(this);
           this.toggleEdit = this.toggleEdit.bind(this);
           this.handleModalClose = this.handleModalClose.bind(this);
           this.deleteSpeciesFromServer = this.deleteSpeciesFromServer.bind(this);
+          this.updateSpeciesOnServer = this.updateSpeciesOnServer.bind(this);
           this.confirmDelete = this.confirmDelete.bind(this);
      }
 
-     componentDidMount() {
-          const { modalSpecies } = this.props;
-          this.setState({
-               speciesToDisplay: modalSpecies
-          })
+     componentDidUpdate(prevProps) {
+          if (this.props.modalSpecies && (this.props !== prevProps)) {
+               this.setState({ selectedSpecies: this.props.modalSpecies })
+          }
      }
 
      handleInputChange(e) {
-          if (this.state.speciesToDisplay) {
-               this.setState({
-                    [speciesToDisplay[e.target.name]] : e.target.value
-               })
-          }
+          this.setState({
+               selectedSpecies: {
+                    ...this.state.selectedSpecies,
+                    [e.target.name]: e.target.value
+               }
+          })
      }
 
      toggleEdit() {
@@ -47,10 +48,24 @@ class SpeciesModal extends Component {
 
      deleteSpeciesFromServer(id) {
           axios.delete(`/api/species/${id}`).then(response => {
-               console.log(response);
                const { updateSpecies } = this.props;
                this.props.hide("showSpeciesModal");
                updateSpecies(response.data);
+          })
+     }
+
+     updateSpeciesOnServer(id) {
+          const { name, scientific_name, image_url, description } = this.state.selectedSpecies;
+          const updatedSpecies = { name, scientific_name, image_url, description };
+          axios.put(`/api/species/${id}`, updatedSpecies).then(response => {
+               const { updateSpecies } = this.props;
+               const updatedSelectedSpecies = response.data.filter(species => species.id === id)[0];
+               console.log(updatedSelectedSpecies);
+               updateSpecies(response.data);
+               this.setState({ 
+                    selectedSpecies: updatedSelectedSpecies
+               })
+               this.toggleEdit();
           })
      }
 
@@ -72,11 +87,10 @@ class SpeciesModal extends Component {
      }
 
      render() {
-          console.log(this.props);
-          const { edit } = this.state;
+          const { edit, selectedSpecies } = this.state;
           const { show, modalSpecies, species } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
-          const speciesToDisplay = show ? modalSpecies : null;
+          const speciesToDisplay = show ? species.filter(species => species.id === modalSpecies.id)[0] : null;
 
           if (show) {
                return edit ? (
@@ -92,12 +106,12 @@ class SpeciesModal extends Component {
                                    </header>
                                    <section>
                                         <p><strong>SCIENTIFIC NAME: </strong></p>                                   
-                                        <input onChange={this.handleInputChange} value={speciesToDisplay.scientific_name} name="scientific_name"></input>                                   
+                                        <input onChange={this.handleInputChange} value={selectedSpecies.scientific_name} name="scientific_name"></input>                                   
                                         <p><strong>DESCRIPTION: </strong></p>
-                                        <textarea value={speciesToDisplay.description}></textarea>                                   
+                                        <textarea onChange={this.handleInputChange} value={selectedSpecies.description} name="description"></textarea>                                   
                                    </section>
                                    <div className="update-cancel">
-                                        <div>SAVE</div>
+                                        <div onClick={() => this.updateSpeciesOnServer(speciesToDisplay.id)}>SAVE</div>
                                         <div onClick={this.toggleEdit} className="cancel">CANCEL</div>
                                    </div>
                               </div>

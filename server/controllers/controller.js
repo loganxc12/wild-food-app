@@ -105,6 +105,20 @@ module.exports = {
                })
      },
 
+     updateSpecies: (req, res) => {
+          const { id } = req.params;
+          const { name, scientific_name, image_url, description } = req.body;
+          const dbInstance = req.app.get("db");
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.update_species([ id, user_id, name, scientific_name, image_url, description ])
+               .then(species => res.status(200).send(species))
+               .catch( error => {
+                    res.status(500).send({errorMessage: "Error in deleteSpecies method"});
+                    console.log(error);
+               })
+     },
+
      deleteSpecies: (req, res) => {
           const { id } = req.params;
           const dbInstance = req.app.get("db");
