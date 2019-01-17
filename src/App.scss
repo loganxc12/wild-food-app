@@ -358,8 +358,19 @@ $text-light: #9B9B9B;
       button {
         @extend %form-button;
         margin: 15px;
-        padding: 14px 25px;
+        padding: 4px 25px;
       }
+
+      .date-picker {
+        cursor: default;
+      }
+
+      input {
+        font-size: 13px;
+        padding: 5px;
+        border: 1px solid lightgrey;
+      }
+
     }
 
     .image-upload-box {
@@ -763,4 +774,76 @@ $text-light: #9B9B9B;
 
 }
 
+ /* ADD LOCATION MODAL */
+
+.location-modal-main {
+  display: flex;
+  position:fixed;
+  background: white;
+  width: 55%;
+  height: 90vh;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  z-index: 1000;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+
+  a.close-btn {
+    position: absolute;
+    top: 14px;
+    right: 24px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  .modal-content {
+    width: 100%;
+    margin: 25px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      h2 {
+        font-size: 26px;
+      }
+
+      p {
+        font-size: 14px;
+        margin-top: 0;
+      }
+
+      input {
+        @extend %input-box;
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+    }
+
+    .location-picker {
+      background-image: url("./images/location-picker.png");
+      background-size: cover;
+      margin: 20px 0;
+      width: 450px;
+      height: 248px;
+    }
+
+    button {
+      @extend %button;
+      padding: 12px 27px;
+      margin: 0 auto;
+      margin: 15px;
+    }
+
+  }
+
+}
 

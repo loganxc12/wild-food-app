@@ -1,1 +1,2 @@
-SELECT * FROM species WHERE user_id = $1;
+SELECT * FROM species WHERE user_id = $1
+ORDER BY id;

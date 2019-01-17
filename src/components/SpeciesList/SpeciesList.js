@@ -34,7 +34,7 @@ class SpeciesList extends Component {
      }
 
      hideModal(modal) {
-          this.setState({ [modal]: false})
+          this.setState({ [modal]: false })
      }
 
      render() {

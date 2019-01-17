@@ -60,7 +60,6 @@ class SpeciesModal extends Component {
           axios.put(`/api/species/${id}`, updatedSpecies).then(response => {
                const { updateSpecies } = this.props;
                const updatedSelectedSpecies = response.data.filter(species => species.id === id)[0];
-               console.log(updatedSelectedSpecies);
                updateSpecies(response.data);
                this.setState({ 
                     selectedSpecies: updatedSelectedSpecies

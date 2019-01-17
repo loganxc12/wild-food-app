@@ -3,6 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import AddSpeciesModal from "../SpeciesList/AddSpeciesModal";
+import LocationModal from "./locationModal";
 
 class AddAdventure extends Component {
 
@@ -17,9 +18,11 @@ class AddAdventure extends Component {
             images: [],
             species: [],
             redirect: false,
-            showModal: false
+            showAddModal: false,
+            showLocationModal: false
         }
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.updateStateVal = this.updateStateVal.bind(this);
         this.toggleRedirect = this.toggleRedirect.bind(this);
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
@@ -29,22 +32,24 @@ class AddAdventure extends Component {
     }
 
     handleInputChange(e) {
-        this.setState({
-            [e.target.name] : e.target.value
-        })
+        this.setState({ [e.target.name] : e.target.value })
+    }
+
+    updateStateVal(prop, val) {
+        this.setState({ [prop]: val })
     }
 
     toggleRedirect() {
         this.setState({ redirect: true })
     }
 
-    showModal() {
-        this.setState({ showModal: true })
-    }
+    showModal(modal) {
+        this.setState({ [modal]: true })
+   }
 
-    hideModal() {
-        this.setState({ showModal: false})
-    }
+   hideModal(modal) {
+        this.setState({ [modal]: false })
+   }
 
     addToImagesArray() {
         const imageToAdd = this.state.imageUrl;
@@ -69,9 +74,8 @@ class AddAdventure extends Component {
     }
 
     render() {
-        const { title, date, location, description, imageUrl, images, species, showModal, redirect } = this.state;
-        const { user } = this.props;
-        
+        const { title, date, location, description, imageUrl, images, species, showAddModal, showLocationModal, redirect } = this.state;
+
         if (redirect) {
             return <Redirect to="/dash" />;
         }
@@ -80,11 +84,19 @@ class AddAdventure extends Component {
         const previewSpecies = species.map( species => 
             <li>{species.name.toUpperCase()} <button className="delete-circle">X</button></li>
         );
+        const completedStyle = { backgroundColor: "rgba(90, 210, 152, 0.555)" };       
+        
 
         return (
             <div className="add-adventure-wrapper">
+                <LocationModal
+                    show={showLocationModal}
+                    hide={this.hideModal}
+                    updateLocation={this.updateStateVal}
+                    savedLocation={location}
+                />
                 <AddSpeciesModal 
-                    show={showModal}
+                    show={showAddModal}
                     hide={this.hideModal}
                     addSpecies={this.addToSpeciesArray}
                 />
@@ -92,12 +104,18 @@ class AddAdventure extends Component {
                     <h1>ADD A NEW ADVENTURE</h1>
                     <p>Adventures are like journal entries, they're detailed field reports of your foraging trips: a place to capture the species, images and stories you gather in your local ecosystem. </p>
                     <input onChange={this.handleInputChange} name="title" placeholder="Give your adventure a title (ex: Spring Foraging)"></input>
-                    <input onChange={this.handleInputChange} name="location" placeholder="Add the Location"></input>
-                    <input onChange={this.handleInputChange} name="date" placeholder="Date" type="date"></input>
-                    {/* <div className="button-container">
-                        <button>+ Add the Location</button>
-                        <button>+ Add the Date</button>
-                    </div> */}
+                    <div className="button-container">
+                        <button 
+                            onClick={() => this.showModal("showLocationModal")} 
+                            style={ location ? completedStyle : null } >
+                            {location ? location : "+ Add the Location"}
+                        </button>
+                        <button 
+                            className="date-picker"
+                            style={ date ? completedStyle : null }>
+                            Add the date:<input onChange={this.handleInputChange} type="date" name="date"></input>
+                        </button>
+                    </div>
                     <div className="image-upload-box">
                         <h2>ADD PHOTOS TO YOUR ADVENTURE</h2>
                         <div className="url-container">
@@ -115,7 +133,7 @@ class AddAdventure extends Component {
                         <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
                         <div className="button-container">
                             <button><i className="fas fa-angle-down"></i> Choose from Species List</button>
-                            <button onClick={this.showModal}>+ Add New Species</button>
+                            <button onClick={() => this.showModal("showAddModal")}>+ Add New Species</button>
                         </div>
                         <ul> { previewSpecies } </ul>
                     </div>
