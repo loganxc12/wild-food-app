@@ -10,6 +10,7 @@ class SpeciesModal extends Component {
      constructor(props) {
           super(props);
           this.state = {
+               speciesToDisplay: null,
                edit: false
           }
           this.handleInputChange = this.handleInputChange.bind(this);
@@ -19,10 +20,19 @@ class SpeciesModal extends Component {
           this.confirmDelete = this.confirmDelete.bind(this);
      }
 
-     handleInputChange(e) {
+     componentDidMount() {
+          const { modalSpecies } = this.props;
           this.setState({
-               [e.target.name] : e.target.value
+               speciesToDisplay: modalSpecies
           })
+     }
+
+     handleInputChange(e) {
+          if (this.state.speciesToDisplay) {
+               this.setState({
+                    [speciesToDisplay[e.target.name]] : e.target.value
+               })
+          }
      }
 
      toggleEdit() {
@@ -62,10 +72,11 @@ class SpeciesModal extends Component {
      }
 
      render() {
+          console.log(this.props);
           const { edit } = this.state;
-          const { show, modalId, species } = this.props;
+          const { show, modalSpecies, species } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
-          const speciesToDisplay = show ? species.filter(species => species.id === modalId)[0] : null;
+          const speciesToDisplay = show ? modalSpecies : null;
 
           if (show) {
                return edit ? (
@@ -80,17 +91,14 @@ class SpeciesModal extends Component {
                                         <h2>{speciesToDisplay.name.toUpperCase()}</h2>
                                    </header>
                                    <section>
-                                   <p><strong>SCIENTIFIC NAME: </strong></p>                                   
-                                   <input placeholder={speciesToDisplay.scientific_name}></input>                                   
-                                   <p><strong>DESCRIPTION: </strong></p>
-                                   <textarea placeholder={speciesToDisplay.description}></textarea>                                   
+                                        <p><strong>SCIENTIFIC NAME: </strong></p>                                   
+                                        <input onChange={this.handleInputChange} value={speciesToDisplay.scientific_name} name="scientific_name"></input>                                   
+                                        <p><strong>DESCRIPTION: </strong></p>
+                                        <textarea value={speciesToDisplay.description}></textarea>                                   
                                    </section>
-                                   <div className="settings-box">
-                                        <div className="edit-delete-box">
-                                             <div className="edit">EDIT</div>
-                                             <div onClick={() => this.confirmDelete(speciesToDisplay.id)} className="delete">DELETE</div>
-                                        </div>
-                                        <i className="fas fa-cog"></i>
+                                   <div className="update-cancel">
+                                        <div>SAVE</div>
+                                        <div onClick={this.toggleEdit} className="cancel">CANCEL</div>
                                    </div>
                               </div>
                          </section>
@@ -107,16 +115,14 @@ class SpeciesModal extends Component {
                                         <h2>{speciesToDisplay.name.toUpperCase()}</h2>
                                    </header>
                                    <section>
-                                   <p><strong>SCIENTIFIC NAME: </strong><span>{speciesToDisplay.scientific_name}</span></p>
-                                   <p><strong>DESCRIPTION: </strong><span>{speciesToDisplay.description}</span></p>
+                                        <p><strong>SCIENTIFIC NAME: </strong><span>{speciesToDisplay.scientific_name}</span></p>
+                                        <p><strong>DESCRIPTION: </strong><span>{speciesToDisplay.description}</span></p>
                                    </section>
-                                   <div className="settings-box">
-                                        <div className="edit-delete-box">
+                                   <div className="edit-delete-box">
                                              <div onClick={this.toggleEdit} className="edit">EDIT</div>
                                              <div onClick={() => this.confirmDelete(speciesToDisplay.id)} className="delete">DELETE</div>
-                                        </div>
-                                        <i className="fas fa-cog"></i>
                                    </div>
+                                   <i className="fas fa-cog"></i>
                               </div>
                          </section>
                     </div>

@@ -11,7 +11,7 @@ class SpeciesList extends Component {
           this.state = {
                showAddModal: false,
                showSpeciesModal: false,
-               modalId: 0 
+               modalSpecies: null 
           }
           this.postSpeciesToServer = this.postSpeciesToServer.bind(this);
           this.showModal = this.showModal.bind(this);
@@ -26,10 +26,10 @@ class SpeciesList extends Component {
           })
      }
 
-     showModal(modal, id) {
+     showModal(modal, species) {
           this.setState({ 
                [modal]: true,
-               modalId: id
+               modalSpecies: species
           })
      }
 
@@ -39,7 +39,7 @@ class SpeciesList extends Component {
 
      render() {
           //Pulling down species array from Redux and mapping over/conditionally rendering.
-          const { showAddModal, showSpeciesModal, modalId } = this.state;
+          const { showAddModal, showSpeciesModal, modalSpecies } = this.state;
           const { species } = this.props;
 
           let speciesToDisplay;
@@ -53,7 +53,7 @@ class SpeciesList extends Component {
                          }
                          return (
                               <div key={species.id} className="list-item-wrapper">
-                                   <div onClick={ () => this.showModal("showSpeciesModal", species.id) } className="list-item" style={speciesStyle}>
+                                   <div onClick={ () => this.showModal("showSpeciesModal", species) } className="list-item" style={speciesStyle}>
                                         <div className="title">
                                              <p>{species.scientific_name}</p>
                                              <h2>{species.name}</h2>
@@ -75,7 +75,7 @@ class SpeciesList extends Component {
                     <SpeciesModal 
                          show={showSpeciesModal}
                          hide={this.hideModal}
-                         modalId={modalId}
+                         modalSpecies={modalSpecies}
                     />
                     { speciesToDisplay }
                     <i onClick={ () => this.showModal("showAddModal")} className="fas fa-plus-circle"></i>
