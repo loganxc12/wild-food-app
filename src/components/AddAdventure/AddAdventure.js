@@ -65,6 +65,11 @@ class AddAdventure extends Component {
         })
     }
 
+    deleteFromArray(prop, index) {
+        let updatedArray = this.state[prop].filter( (e, i) => i !== index );
+        this.setState({ [prop]: updatedArray });
+    }
+
     postAdventureToServer() {
         const { title, date, location, description, images, species } = this.state;
         const newAdventure = { title, date, location, description, images, species };
@@ -80,12 +85,22 @@ class AddAdventure extends Component {
             return <Redirect to="/dash" />;
         }
 
-        const previewImages = images.map( image => <img src={image} className="image-preview" alt="" /> );
-        const previewSpecies = species.map( species => 
-            <li>{species.name.toUpperCase()} <button className="delete-circle">X</button></li>
+        const previewImages = images.map( (image, i) => {
+            return (
+                <div key={i} className="image-preview" style={{backgroundImage: `url(${image})`, backgroundSize: "cover"}}>
+                    <button onClick={() => this.deleteFromArray("images", i)} className="delete-circle">X</button>
+                </div>
+            )
+        });
+
+        const previewSpecies = species.map( (species, i) => 
+            <li onClick={() => this.showModal("showAddModal")}>
+                {species.name.toUpperCase()} <button onClick={() => this.deleteFromArray("species", i)} className="delete-circle">X</button>
+            </li>
         );
+
         const completedStyle = { backgroundColor: "rgba(90, 210, 152, 0.555)" };       
-        
+        const uploadBarStyle = images.length ? { display: "flex" } : { display: "none" };
 
         return (
             <div className="add-adventure-wrapper">
@@ -122,11 +137,8 @@ class AddAdventure extends Component {
                             <input onChange ={this.handleInputChange} name="imageUrl" placeholder="Enter Image URL" value={imageUrl} ></input>
                             <button onClick={this.addToImagesArray}>ADD PHOTO</button>
                         </div>
-                        <div className="image-upload-progress">
+                        <div className="image-upload-progress" style={uploadBarStyle}>
                             { previewImages }
-                            {/* <div className="image-preview">
-                                <button className="delete-circle">X</button>
-                            </div> */}
                         </div>
                     </div>
                     <div className="add-species-box">

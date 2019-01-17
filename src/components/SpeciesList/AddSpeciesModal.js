@@ -23,7 +23,7 @@ class AddSpeciesModal extends Component {
           const { name, scientificName, imageUrl, description } = this.state;
           const { hide, addSpecies } = this.props;
           addSpecies(name, scientificName, imageUrl, description);
-          hide();
+          hide("showAddModal");
      }
 
      render() {

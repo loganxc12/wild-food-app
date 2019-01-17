@@ -39,7 +39,7 @@ class LocationModal extends Component {
                               <a className="close-btn" onClick={ () => hide("showLocationModal") }>X</a>
                               <header>
                                    <h2>ADD THE LOCATION</h2>
-                                   <p>Search for a location name or address. If you can't find the place you're looking for, enter a location nearby and drag the pin to the nearest starting point.</p>
+                                   <p>Search for a location name or address. If you can't find the place you're looking for, enter a location nearby and drag the pin to the approximate location.</p>
                                    <input onChange={this.handleInputChange} name="location" value={location ? location : null} placeholder="Spot Name"></input>
                               </header>
                               <div className="location-picker">
