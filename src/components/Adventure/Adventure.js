@@ -16,7 +16,7 @@ class Adventure extends Component {
                adventure: "",
                species: [],
                showSpeciesModal: false,
-               modalId: 0,
+               modalSpecies: null,
                redirect: false
           }
           this.getSingleAdventureFromServer = this.getSingleAdventureFromServer.bind(this);
@@ -39,10 +39,10 @@ class Adventure extends Component {
           })
      }
 
-     showModal(modal, id) {
+     showModal(modal, species) {
           this.setState({ 
                [modal]: true,
-               modalId: id
+               modalSpecies: species
           })
      }
 
@@ -77,7 +77,7 @@ class Adventure extends Component {
      }
 
      render() {
-          const { adventure, species, showSpeciesModal, modalId, redirect } = this.state;
+          const { adventure, species, showSpeciesModal, modalSpecies, redirect } = this.state;
 
           if (redirect) {
                return <Redirect to="/dash" />;
@@ -93,7 +93,7 @@ class Adventure extends Component {
                     <SpeciesModal 
                          show={showSpeciesModal}
                          hide={this.hideModal}
-                         modalId={modalId}
+                         modalSpecies={modalSpecies}
                     />
                     <div className="adventure-hero" style={adventureStyle}>
                          <div className="adventure-title-wrapper">
@@ -114,7 +114,7 @@ class Adventure extends Component {
                                    <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
                                    <ul>
                                         { species.map(el => 
-                                             <div key={el.id} onClick={() => this.showModal("showSpeciesModal", el.id)}>
+                                             <div key={el.id} onClick={() => this.showModal("showSpeciesModal", el)}>
                                                   <li>{el.name.toUpperCase()} <i className="fas fa-long-arrow-alt-right"></i></li>
                                              </div>
                                         ) }
