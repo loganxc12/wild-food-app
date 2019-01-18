@@ -386,6 +386,29 @@ $text-light: #9B9B9B;
         margin: 15px;
         padding: 22px 25px;
       }
+
+      .species-dropdown {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .dropdown-content {
+          position: absolute;
+          top: 77px;
+          display: none;
+          flex-direction: column;
+          align-items: center;
+          width: 84%;
+          background-color: #fff;
+
+          a {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid rgba(155, 155, 155, 0.274);
+          }
+        }
+      }
       
     }
 

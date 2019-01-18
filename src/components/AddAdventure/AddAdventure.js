@@ -166,7 +166,14 @@ class AddAdventure extends Component {
                     <div className="add-species-box">
                         <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
                         <div className="species-container">
-                            <button><i className="fas fa-angle-down"></i> Choose from Species List</button>
+                            <div className="species-dropdown">
+                                <button><i className="fas fa-angle-down"></i> Choose from Species List</button>
+                                <div className="dropdown-content">
+                                    <a href="#">Link 1</a>
+                                    <a href="#">Link 2</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                            </div>
                             <button onClick={() => this.showModal("showAddModal")}>+ Add New Species</button>
                         </div>
                         <ul> { previewSpecies } </ul>
