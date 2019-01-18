@@ -351,7 +351,7 @@ $text-light: #9B9B9B;
       resize: none;
     }
 
-    .button-container {
+    .location-container {
       display: flex;
       margin-top: 7px;
       
@@ -371,6 +371,18 @@ $text-light: #9B9B9B;
         border: 1px solid lightgrey;
       }
 
+    }
+
+    .species-container {
+      display: flex;
+      margin-top: 7px;
+
+      button {
+        @extend %form-button;
+        margin: 15px;
+        padding: 22px 25px;
+      }
+      
     }
 
     .image-upload-box {
@@ -423,6 +435,10 @@ $text-light: #9B9B9B;
       ul {
         line-height: 38px;
         font-weight: 700;
+
+        span {
+          cursor: pointer;
+        }
       }
     }
 

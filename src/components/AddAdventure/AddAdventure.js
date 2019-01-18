@@ -19,7 +19,9 @@ class AddAdventure extends Component {
             species: [],
             redirect: false,
             showAddModal: false,
-            showLocationModal: false
+            showLocationModal: false,
+            modalSpecies: null,
+            modalIndex: 0
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.updateStateVal = this.updateStateVal.bind(this);
@@ -27,7 +29,7 @@ class AddAdventure extends Component {
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.addToImagesArray = this.addToImagesArray.bind(this);
-        this.addToSpeciesArray = this.addToSpeciesArray.bind(this);
+        this.addUpdateSpeciesArray = this.addUpdateSpeciesArray.bind(this);
         this.postAdventureToServer = this.postAdventureToServer.bind(this);
     }
 
@@ -43,12 +45,19 @@ class AddAdventure extends Component {
         this.setState({ redirect: true })
     }
 
-    showModal(modal) {
-        this.setState({ [modal]: true })
-   }
+    showModal(modal, species, index) {
+        this.setState({ 
+            [modal]: true,
+            modalSpecies: species,
+            modalIndex: index
+        })
+    }
 
    hideModal(modal) {
-        this.setState({ [modal]: false })
+        this.setState({ 
+            [modal]: false,
+            modalSpecies: null
+        })
    }
 
     addToImagesArray() {
@@ -59,10 +68,21 @@ class AddAdventure extends Component {
         })
     }
 
-    addToSpeciesArray(name, scientificName, imageUrl, description) {
-        this.setState({
-            species: [...this.state.species, { name, scientificName, imageUrl, description }]
-        })
+    addUpdateSpeciesArray(name, scientificName, imageUrl, description) {
+        if (this.state.modalSpecies) {
+            this.setState(state => {
+                const species = state.species.map((el, i) => {
+                    return (i === state.modalIndex) ? { name, scientificName, imageUrl, description } : el;
+                });
+                return {
+                    species,
+                }
+            })
+        } else {
+            this.setState({
+                species: [...this.state.species, { name, scientificName, imageUrl, description }]
+            })
+        }    
     }
 
     deleteFromArray(prop, index) {
@@ -79,7 +99,7 @@ class AddAdventure extends Component {
     }
 
     render() {
-        const { title, date, location, description, imageUrl, images, species, showAddModal, showLocationModal, redirect } = this.state;
+        const { title, date, location, description, imageUrl, images, species, showAddModal, showLocationModal, redirect, modalSpecies, modalIndex } = this.state;
 
         if (redirect) {
             return <Redirect to="/dash" />;
@@ -94,8 +114,8 @@ class AddAdventure extends Component {
         });
 
         const previewSpecies = species.map( (species, i) => 
-            <li onClick={() => this.showModal("showAddModal")}>
-                {species.name.toUpperCase()} <button onClick={() => this.deleteFromArray("species", i)} className="delete-circle">X</button>
+            <li>
+                <span onClick={() => this.showModal("showAddModal", species, i)}>{species.name.toUpperCase()}</span> <button onClick={() => this.deleteFromArray("species", i)} className="delete-circle">X</button>
             </li>
         );
 
@@ -113,13 +133,15 @@ class AddAdventure extends Component {
                 <AddSpeciesModal 
                     show={showAddModal}
                     hide={this.hideModal}
-                    addSpecies={this.addToSpeciesArray}
+                    addSpecies={this.addUpdateSpeciesArray}
+                    modalSpecies={modalSpecies}
+                    modalIndex={modalIndex}
                 />
                 <div className="add-adventure-form">
                     <h1>ADD A NEW ADVENTURE</h1>
                     <p>Adventures are like journal entries, they're detailed field reports of your foraging trips: a place to capture the species, images and stories you gather in your local ecosystem. </p>
                     <input onChange={this.handleInputChange} name="title" placeholder="Give your adventure a title (ex: Spring Foraging)"></input>
-                    <div className="button-container">
+                    <div className="location-container">
                         <button 
                             onClick={() => this.showModal("showLocationModal")} 
                             style={ location ? completedStyle : null } >
@@ -143,7 +165,7 @@ class AddAdventure extends Component {
                     </div>
                     <div className="add-species-box">
                         <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
-                        <div className="button-container">
+                        <div className="species-container">
                             <button><i className="fas fa-angle-down"></i> Choose from Species List</button>
                             <button onClick={() => this.showModal("showAddModal")}>+ Add New Species</button>
                         </div>
