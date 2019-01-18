@@ -257,7 +257,11 @@ $text-light: #9B9B9B;
     right: 50px;
     font-size: 65px;
     color: $green;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #fff;
     cursor: pointer;
+    z-index: 3000;
   }
 
   .list-item-wrapper {
