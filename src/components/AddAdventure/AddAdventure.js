@@ -60,6 +60,11 @@ class AddAdventure extends Component {
         })
    }
 
+    resetSelectBox = () => {
+        const selectBox = this.refs.selectBox;
+        selectBox.selectedIndex = 0;
+    }
+
     addToImagesArray() {
         const imageToAdd = this.state.imageUrl;
         this.setState({
@@ -68,11 +73,11 @@ class AddAdventure extends Component {
         })
     }
 
-    addUpdateSpeciesArray(name, scientificName, imageUrl, description) {
+    addUpdateSpeciesArray({ name, scientific_name, image_url, description }) {
         if (this.state.modalSpecies) {
             this.setState(state => {
                 const species = state.species.map((el, i) => {
-                    return (i === state.modalIndex) ? { name, scientificName, imageUrl, description } : el;
+                    return (i === state.modalIndex) ? { name, scientific_name, image_url, description } : el;
                 });
                 return {
                     species,
@@ -80,7 +85,7 @@ class AddAdventure extends Component {
             })
         } else {
             this.setState({
-                species: [...this.state.species, { name, scientificName, imageUrl, description }]
+                species: [...this.state.species, { name, scientific_name, image_url, description }]
             })
         }    
     }
@@ -100,6 +105,7 @@ class AddAdventure extends Component {
 
     render() {
         const { title, date, location, description, imageUrl, images, species, showAddModal, showLocationModal, redirect, modalSpecies, modalIndex } = this.state;
+        const userSpecies = this.props.species ? this.props.species : [];
 
         if (redirect) {
             return <Redirect to="/dash" />;
@@ -114,7 +120,7 @@ class AddAdventure extends Component {
         });
 
         const previewSpecies = species.map( (species, i) => 
-            <li>
+            <li key={i}>
                 <span onClick={() => this.showModal("showAddModal", species, i)}>{species.name.toUpperCase()}</span> <button onClick={() => this.deleteFromArray("species", i)} className="delete-circle">X</button>
             </li>
         );
@@ -166,14 +172,12 @@ class AddAdventure extends Component {
                     <div className="add-species-box">
                         <h2>SPECIES FOUND ON THIS ADVENTURE:</h2>
                         <div className="species-container">
-                            <div className="species-dropdown">
-                                <button><i className="fas fa-angle-down"></i> Choose from Species List</button>
-                                <div className="dropdown-content">
-                                    <a href="#">Link 1</a>
-                                    <a href="#">Link 2</a>
-                                    <a href="#">Link 3</a>
-                                </div>
-                            </div>
+                            <button>
+                                <select ref="selectBox" onChange={e => {this.addUpdateSpeciesArray(userSpecies.filter(species => species.name === e.target.value)[0]); this.resetSelectBox() }} defaultValue="" required>
+                                    <option value="" disabled>Choose from Species List</option>
+                                    { userSpecies.map( species => <option key={species.id}>{species.name}</option> ) }
+                                </select>
+                            </button>
                             <button onClick={() => this.showModal("showAddModal")}>+ Add New Species</button>
                         </div>
                         <ul> { previewSpecies } </ul>
@@ -188,6 +192,7 @@ class AddAdventure extends Component {
                         </button>
                     </div>
                 </div>
+                <div className="footer"></div>
             </div>
         );
      }
@@ -195,20 +200,9 @@ class AddAdventure extends Component {
 }
 
 function mapStateToProps(reduxState) {
-     const { user } = reduxState;
-     return { user };
+     const { user, species } = reduxState;
+     return { user, species };
 }
 
 export default connect(mapStateToProps)(AddAdventure);
 
- {/* <input onChange={this.handleInputChange} name="location" placeholder="Location"></input>
-     <input onChange={this.handleInputChange} name="date" placeholder="Date" type="date"></input> */}
-{/*  <input onChange ={this.handleInputChange} name="imageUrl" placeholder="Image URL" value={imageUrl} ></input>
-     <button onClick={this.addToImagesArray} className="general-button"><i className="fas fa-camera"></i>  Add Image To Adventure</button> */}
-     // <div className="preview-images-wrapper">{previewImages}</div>
-{/* <select>
-     <option selected disabled>Choose a species from your Species List</option>
-     <option value="Wild Leek">Wild Leek</option>
-     <option value="Fiddleheads">Fiddleheads</option>
-</select> */}
-{/* <ul>{previewSpecies}</ul> */}

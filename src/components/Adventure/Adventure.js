@@ -138,7 +138,8 @@ class Adventure extends Component {
                               <div onClick={() => this.confirmDelete(adventure.id)} className="delete">DELETE</div>
                          </div>
                          <i className="fas fa-cog"></i>
-                    </div>               
+                    </div>
+                    <div className="footer"></div>               
                </div>
           ) : null;
 

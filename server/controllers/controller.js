@@ -94,10 +94,10 @@ module.exports = {
 
      postSpecies: (req, res) => {
           const dbInstance = req.app.get("db");
-          const { name, scientificName, imageUrl, description } = req.body;
+          const { name, scientific_name, image_url, description } = req.body;
           // const { id } = req.session.user;
           const user_id = 1;
-          dbInstance.create_species([ name, scientificName, imageUrl, description, user_id ])
+          dbInstance.create_species([ name, scientific_name, image_url, description, user_id ])
                .then(species => res.status(200).send(species))
                .catch(error => {
                     res.status(500).send({errorMessage: "Error in postSpecies method"});

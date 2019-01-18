@@ -5,8 +5,8 @@ class AddSpeciesModal extends Component {
           super(props);
           this.state = {
                name: "",
-               scientificName: "",
-               imageUrl: "",
+               scientific_name: "",
+               image_url: "",
                description: ""
           }
           this.handleInputChange = this.handleInputChange.bind(this);
@@ -17,8 +17,8 @@ class AddSpeciesModal extends Component {
 
      componentDidUpdate(prevProps) {
           if (this.props.modalSpecies && (this.props !== prevProps)) {
-               const { name, scientificName, imageUrl, description } = this.props.modalSpecies;
-               this.setState({ name, scientificName, imageUrl, description });
+               const { name, scientific_name, image_url, description } = this.props.modalSpecies;
+               this.setState({ name, scientific_name, image_url, description });
           }
      }
 
@@ -39,15 +39,15 @@ class AddSpeciesModal extends Component {
      }
 
      modalSubmit() {
-          const { name, scientificName, imageUrl, description } = this.state;
+          const { name, scientific_name, image_url, description } = this.state;
           const { hide, addSpecies } = this.props;
-          addSpecies(name, scientificName, imageUrl, description);
+          addSpecies({ name, scientific_name, image_url, description } );
           this.resetState();
           hide("showAddModal");
      }
 
      render() {
-          const { name, scientificName, imageUrl, description } = this.state;
+          const { name, scientific_name, image_url, description } = this.state;
           const { show, hide } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
           return show ? (
@@ -61,14 +61,14 @@ class AddSpeciesModal extends Component {
                               </header>
                               <form>
                                    <input onChange={this.handleInputChange} name="name" value={name} placeholder="Common Name"></input>
-                                   <input onChange={this.handleInputChange} name="scientificName" value={scientificName} placeholder="Scientific name"></input>
-                                   <input onChange={this.handleInputChange} name="imageUrl" value={imageUrl} placeholder="Image URL"></input>
+                                   <input onChange={this.handleInputChange} name="scientific_name" value={scientific_name} placeholder="Scientific name"></input>
+                                   <input onChange={this.handleInputChange} name="image_url" value={image_url} placeholder="Image URL"></input>
                                    <textarea onChange={this.handleInputChange} name="description" value={description} placeholder="Description (habitat, identification, recipes, look-alikes…)"></textarea>
-                              <button 
-                                   onClick={ (name && scientificName && imageUrl && description) ? 
-                                   this.modalSubmit : () => alert("Please fill out all fields to add a new species") } 
-                              >SAVE SPECIES
-                              </button>
+                                   <button 
+                                        onClick={ (name && scientific_name && image_url && description) ? 
+                                        this.modalSubmit : () => alert("Please fill out all fields to add a new species") } 
+                                   >SAVE SPECIES
+                                   </button>
                               </form>
                          </div>
                     </section>
