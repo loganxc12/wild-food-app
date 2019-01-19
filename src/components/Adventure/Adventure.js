@@ -7,15 +7,17 @@ import { updateAdventures } from "../../ducks/reducer";
 import { confirmAlert } from "react-confirm-alert"; 
 import "react-confirm-alert/src/react-confirm-alert.css"; 
 import SpeciesModal from "../SpeciesList/SpeciesModal";
+import ImageSlider from "./ImageSlider/ImageSlider";
 
 class Adventure extends Component {
 
      constructor(props) {
           super(props);
           this.state = {
-               adventure: "",
+               adventure: null,
                species: [],
                showSpeciesModal: false,
+               showImageSlider: false,
                modalSpecies: null,
                redirect: false
           }
@@ -78,7 +80,7 @@ class Adventure extends Component {
      }
 
      render() {
-          const { adventure, species, showSpeciesModal, modalSpecies, redirect } = this.state;
+          const { adventure, species, showSpeciesModal, showImageSlider, modalSpecies, redirect } = this.state;
 
           if (redirect) {
                return <Redirect to="/dash" />;
@@ -96,6 +98,11 @@ class Adventure extends Component {
                          hide={this.hideModal}
                          modalSpecies={modalSpecies}
                     />
+                    <ImageSlider
+                         show={showImageSlider}
+                         hide={this.hideModal}
+                         images={adventure.images}
+                    />
                     <div className="adventure-hero" style={adventureStyle}>
                          <div className="adventure-title-wrapper">
                               <h1>{adventure.title.toUpperCase()}</h1>
@@ -105,7 +112,7 @@ class Adventure extends Component {
                               </div>
                               <div className="adventure-photos">
                                    <button>+ ADD PHOTOS</button>
-                                   <h3><i className="fas fa-image"></i> SEE ALL PHOTOS</h3>
+                                   <h3 onClick={() => this.showModal("showImageSlider")}><i className="fas fa-image"></i> SEE ALL PHOTOS</h3>
                               </div>
                          </div>
                     </div>

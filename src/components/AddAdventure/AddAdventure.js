@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
+import { updateAdventures } from "../../ducks/reducer"; 
 import AddSpeciesModal from "../SpeciesList/AddSpeciesModal";
-import LocationModal from "./locationModal";
+import LocationModal from "./LocationModal";
 
 class AddAdventure extends Component {
 
@@ -99,6 +100,8 @@ class AddAdventure extends Component {
         const { title, date, location, description, images, species } = this.state;
         const newAdventure = { title, date, location, description, images, species };
         axios.post("/api/adventures", newAdventure).then(response => {
+            const { adventures, updateAdventures } = this.props;
+            updateAdventures([...adventures, response.data[0]])
             this.setState({ redirect: true })
         })
     }
@@ -200,9 +203,9 @@ class AddAdventure extends Component {
 }
 
 function mapStateToProps(reduxState) {
-     const { user, species } = reduxState;
-     return { user, species };
+     const { user, species, adventures } = reduxState;
+     return { user, species, adventures };
 }
 
-export default connect(mapStateToProps)(AddAdventure);
+export default connect(mapStateToProps, { updateAdventures })(AddAdventure);
 

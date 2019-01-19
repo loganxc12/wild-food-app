@@ -21,7 +21,6 @@ class SpeciesList extends Component {
      postSpeciesToServer({ name, scientific_name, image_url, description }) {
           const newSpecies = { name, scientific_name, image_url, description };
           axios.post("/api/species", newSpecies).then(response => {
-               console.log(response);
                const { species, updateSpecies } = this.props;
                updateSpecies([...species, response.data[0]]);
           })

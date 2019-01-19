@@ -17,7 +17,7 @@ module.exports = {
                               //Loop over species array passed with Adventure (in req.body) and check each species 
                               //object against array of All species.
                               species.forEach(item => {
-                                   const searchKey = item.scientificName.toLowerCase();
+                                   const searchKey = item.scientific_name.toLowerCase();
                                    const match = allSpeciesInDb.find(el => {
                                         return el.scientific_name.toLowerCase() === searchKey;
                                    })
@@ -27,8 +27,8 @@ module.exports = {
                                    } 
                                    //If no match, first create a new entry in the species table and then create a new line_items entry.
                                    else {
-                                        const { name, scientificName, imageUrl, description } = item;
-                                        dbInstance.create_species([ name, scientificName, imageUrl, description, user_id ])
+                                        const { name, scientific_name, image_url, description } = item;
+                                        dbInstance.create_species([ name, scientific_name, image_url, description, user_id ])
                                              .then(species => {
                                                   console.log("---newlyCreatedSpecies", species);
                                                   dbInstance.create_line_item([ species[0].id, adventure.id, user_id ])
