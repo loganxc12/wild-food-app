@@ -95,11 +95,11 @@ class SpeciesModal extends Component {
                return edit ? (
                     <div className={showHideClassName}>
                          <section className="modal-main">
+                              <a className="close-btn" onClick={this.handleModalClose}>X</a>
                               <div className="modal-img">
                                    <img src={speciesToDisplay.image_url} alt="selected species" />
                               </div>
                               <div className="species-content">
-                                   <a className="close-btn" onClick={this.handleModalClose}>X</a>
                                    <header>
                                         <h2>{speciesToDisplay.name.toUpperCase()}</h2>
                                    </header>
@@ -119,11 +119,11 @@ class SpeciesModal extends Component {
                ) : (
                     <div className={showHideClassName}>
                          <section className="modal-main">
+                              <a className="close-btn" onClick={this.handleModalClose}>X</a>
                               <div className="modal-img">
                                    <img src={speciesToDisplay.image_url} alt="selected species" />
                               </div>
                               <div className="species-content">
-                                   <a className="close-btn" onClick={this.handleModalClose}>X</a>
                                    <header>
                                         <h2>{speciesToDisplay.name.toUpperCase()}</h2>
                                    </header>
