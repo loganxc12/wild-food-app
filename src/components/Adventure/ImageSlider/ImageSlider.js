@@ -6,7 +6,7 @@ class ImageSlider extends Component {
      constructor(props) {
           super(props);
           this.state = {
-               currentIndex: 0,
+               currentIndex: 0
           }
      }
 

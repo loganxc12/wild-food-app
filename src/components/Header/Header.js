@@ -69,7 +69,6 @@ class Header extends Component {
     }
 
     render() {
-        console.log(this.props);
         const { dropdown } = this.state;
         const { user } = this.props;
 

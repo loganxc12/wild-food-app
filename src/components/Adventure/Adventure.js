@@ -8,6 +8,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css"; 
 import SpeciesModal from "../SpeciesList/SpeciesModal";
 import ImageSlider from "./ImageSlider/ImageSlider";
+import AdventureMap from "./AdventureMap";
 
 class Adventure extends Component {
 
@@ -130,7 +131,9 @@ class Adventure extends Component {
                               </div>
                          </div>
                          <div className="map-box">
-                              <div className="map-preview"></div>
+                              <div className="map-preview">
+                                   <AdventureMap />
+                              </div>
                          </div>
                     </div>
                     <div className="description-box">

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Autocomplete from "react-google-autocomplete";
 
 class LocationModal extends Component {
      constructor(props) {
@@ -40,7 +41,15 @@ class LocationModal extends Component {
                               <header>
                                    <h2>ADD THE LOCATION</h2>
                                    <p>Search for a location name or address. If you can't find the place you're looking for, enter a location nearby and drag the pin to the approximate location.</p>
-                                   <input onChange={this.handleInputChange} name="location" value={location ? location : null} placeholder="Spot Name"></input>
+                                   <Autocomplete
+                                        style={{width: '90%'}}
+                                        onPlaceSelected={(place) => {
+                                             console.log(place);
+                                        }}
+                                        types={['(regions)']}
+                                        componentRestrictions={{country: "ru"}}
+                                   />
+                                   {/* <input onChange={this.handleInputChange} name="location" value={location ? location : null} placeholder="Spot Name"></input> */}
                               </header>
                               <div className="location-picker">
                               </div>

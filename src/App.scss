@@ -662,11 +662,12 @@ $text-light: #9B9B9B;
     width: 50%;
 
     .map-preview {
+      position: relative;
       background-image: url("./images/map-preview.jpg");
       background-size: cover;
-      margin-top: 40px;
-      width: 350px;
-      height: 275px;
+      margin-top: 50px;
+      width: 425px;
+      height: 305px;
     }
   }
 
@@ -995,5 +996,12 @@ $text-light: #9B9B9B;
     height: 100%;
   }
 }
+
+/* ADVENTURE MAP */
+
+// .map-container > div {
+//   height: calc(100vh - 100px) !important;
+// }
+
 
 
