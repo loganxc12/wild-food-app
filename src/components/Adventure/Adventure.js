@@ -109,7 +109,7 @@ class Adventure extends Component {
                               <h1>{adventure.title.toUpperCase()}</h1>
                               <div className="adventure-details">
                                    <h3>{moment(adventure.date).format("MMMM Do YYYY")}</h3>
-                                   <h3><i className="fas fa-map-marker-alt"></i> {adventure.location}</h3>
+                                   <h3><i className="fas fa-map-marker-alt"></i> {adventure.location.name}</h3>
                               </div>
                               <div className="adventure-photos">
                                    <button>+ ADD PHOTOS</button>
@@ -132,7 +132,9 @@ class Adventure extends Component {
                          </div>
                          <div className="map-box">
                               <div className="map-preview">
-                                   <AdventureMap />
+                                   <AdventureMap 
+                                        location={adventure.location}
+                                   />
                               </div>
                          </div>
                     </div>

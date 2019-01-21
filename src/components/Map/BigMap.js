@@ -42,8 +42,8 @@ class BigMap extends Component {
                          zoom={10}
                          style={mapStyles}
                          initialCenter={{
-                              lat: -1.2884,
-                              lng: 36.8233
+                              lat: 33.4484,
+                              lng: -112.0740
                          }}
                     >
                          <Marker
@@ -63,4 +63,4 @@ class BigMap extends Component {
      }
 }
 
-export default GoogleApiWrapper({ apiKey: "AIzaSyDbghkNREjZkEHjhLJZ7wjc4ePqLObSWz8" })(BigMap);
+export default GoogleApiWrapper({ apiKey: process.env.REACT_APP_MAP_KEY })(BigMap);

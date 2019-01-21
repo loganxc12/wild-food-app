@@ -32,7 +32,6 @@ class Header extends Component {
                 this.setState({ dropdown: false });
             }
         }
-        console.log("update", typeof(this.props.location.pathname));
     }
 
     login() {

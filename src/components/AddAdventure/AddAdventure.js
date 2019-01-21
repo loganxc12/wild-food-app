@@ -154,7 +154,7 @@ class AddAdventure extends Component {
                         <button 
                             onClick={() => this.showModal("showLocationModal")} 
                             style={ location ? completedStyle : null } >
-                            {location ? location : "+ Add the Location"}
+                            {location ? location.name : "+ Add the Location"}
                         </button>
                         <button 
                             className="date-picker"

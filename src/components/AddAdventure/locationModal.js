@@ -1,13 +1,20 @@
 import React, { Component } from "react";
+import { GoogleApiWrapper } from "google-maps-react";
 import Autocomplete from "react-google-autocomplete";
+import AdventureMap from "../Adventure/AdventureMap";
 
 class LocationModal extends Component {
      constructor(props) {
           super(props);
           this.state = {
-               location: ""
+               location: {
+                    lat: "33.4484",
+                    lng: "-112.0740",
+                    name: "Phoenix, AZ, USA"
+               }
           }
           this.handleInputChange = this.handleInputChange.bind(this);
+          this.setLocation = this.setLocation.bind(this);
           this.modalSubmit = this.modalSubmit.bind(this);
      }
 
@@ -21,11 +28,18 @@ class LocationModal extends Component {
           this.setState({ [e.target.name] : e.target.value })
      }
 
+     setLocation(place) {
+          let location = Object.assign({}, this.state.location);
+          location.lat = place.geometry.location.lat();
+          location.lng = place.geometry.location.lng();
+          location.name = place.formatted_address;
+          this.setState({ location });
+     }
+
      modalSubmit() {
           const { location } = this.state;
           const { hide, updateLocation } = this.props;
           updateLocation("location", location);
-          this.setState({ location: "" })
           hide("showLocationModal");
      }
 
@@ -43,15 +57,14 @@ class LocationModal extends Component {
                                    <p>Search for a location name or address. If you can't find the place you're looking for, enter a location nearby and drag the pin to the approximate location.</p>
                                    <Autocomplete
                                         style={{width: '90%'}}
-                                        onPlaceSelected={(place) => {
-                                             console.log(place);
-                                        }}
+                                        onPlaceSelected={this.setLocation}
                                         types={['(regions)']}
-                                        componentRestrictions={{country: "ru"}}
                                    />
-                                   {/* <input onChange={this.handleInputChange} name="location" value={location ? location : null} placeholder="Spot Name"></input> */}
                               </header>
                               <div className="location-picker">
+                                   <AdventureMap
+                                        location={location}
+                                   />
                               </div>
                               <button 
                                    onClick={ location ? this.modalSubmit : () => alert("Please add a location") } 
@@ -65,4 +78,4 @@ class LocationModal extends Component {
      
 }
 
-export default LocationModal;
+export default GoogleApiWrapper({ apiKey: process.env.REACT_APP_MAP_KEY })(LocationModal);

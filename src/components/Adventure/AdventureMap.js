@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
-import Autocomplete from "react-google-autocomplete";
 
 class AdventureMap extends Component {
 
      render() {
+
+          const { lat, lng } = this.props.location;
 
           const mapStyles = {
                width: "100%",
@@ -15,21 +16,15 @@ class AdventureMap extends Component {
                <div className="map-container">
                     <Map
                          google={this.props.google}
-                         zoom={10}
+                         zoom={11}
                          style={mapStyles}
-                         initialCenter={{
-                              lat: 33.4484,
-                              lng: -112.0740
-                         }}
+                         //PASS COORDINATES FOR EACH ANDVENTURE AS OBJECT AND PROVIDE TO initialCenter
+                         // InitialCenter={{ lat: 40.854885, lng: -88.081807 }}
+                         initialCenter={{ lat, lng }}
+                         center={{ lat, lng }}
                     >
-                         <Marker/>
-                         <Autocomplete
-                              style={{width: '90%'}}
-                              onPlaceSelected={(place) => {
-                                   console.log(place);
-                              }}
-                              types={['(regions)']}
-                              componentRestrictions={{country: "ru"}}
+                         <Marker
+                              position={{ lat, lng }}
                          />
                     </Map>
                </div>
@@ -37,4 +32,4 @@ class AdventureMap extends Component {
      }
 }
 
-export default GoogleApiWrapper({ apiKey: "AIzaSyDbghkNREjZkEHjhLJZ7wjc4ePqLObSWz8" })(AdventureMap);
+export default GoogleApiWrapper({ apiKey: process.env.REACT_APP_MAP_KEY })(AdventureMap);
