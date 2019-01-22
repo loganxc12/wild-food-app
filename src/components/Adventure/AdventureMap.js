@@ -18,8 +18,6 @@ class AdventureMap extends Component {
                          google={this.props.google}
                          zoom={11}
                          style={mapStyles}
-                         //PASS COORDINATES FOR EACH ANDVENTURE AS OBJECT AND PROVIDE TO initialCenter
-                         // InitialCenter={{ lat: 40.854885, lng: -88.081807 }}
                          initialCenter={{ lat, lng }}
                          center={{ lat, lng }}
                     >

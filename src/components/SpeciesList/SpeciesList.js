@@ -48,7 +48,7 @@ class SpeciesList extends Component {
                if (species.length) {
                     speciesToDisplay = species.map(species => {
                          let speciesStyle = {
-                              background: `linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)),url('${species.image_url}')`,
+                              background: `linear-gradient(rgba(33, 41, 51, 0.55), rgba(8, 38, 75, 0.55)),url('${species.image_url}')`,
                               backgroundSize: "cover",
                          }
                          return (

@@ -268,16 +268,9 @@ $text-light: #9B9B9B;
 
 /* HOMEPAGE */
 
-.homepage-hero {
+.homepage-hero, .login-hero {
   @extend %hero;
-  background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/currants.jpg");
-}
-
-/* LOGIN AND SIGN UP PAGE */
-
-.login-hero {
-  @extend %hero;
-  background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/currants.jpg");
+  background-image: linear-gradient(rgba(33, 41, 51, 0.60), rgba(8, 38, 75, 0.60)), url("./images/currants.jpg");
 }
 
 /* DASHBOARD */
@@ -685,6 +678,22 @@ $text-light: #9B9B9B;
 
 }
 
+/* CALENDAR PAGE */
+.calendar-wrapper {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 30px auto;
+  font-family: $heading-font;
+  font-size: 17px;
+  line-height: 23px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: $dark;
+  text-align: left;
+}
+
 /* ADD SPECIES MODAL */
 
 .modal {
@@ -891,7 +900,7 @@ $text-light: #9B9B9B;
   position:fixed;
   background: white;
   width: 55%;
-  height: 90vh;
+  height: 80vh;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
@@ -907,6 +916,7 @@ $text-light: #9B9B9B;
     width: 100%;
     margin: 25px 50px;
     display: flex;
+    justify-content: space-around;
     flex-direction: column;
     align-items: center;
 
@@ -928,7 +938,7 @@ $text-light: #9B9B9B;
 
       input {
         @extend %input-box;
-        margin: 10px 0;
+        margin: 10px auto;
         padding: 10px;
         font-size: 14px;
       }
@@ -939,8 +949,8 @@ $text-light: #9B9B9B;
       position: relative;
       background-size: cover;
       margin: 20px 0;
-      width: 450px;
-      height: 248px;
+      width: 85%;
+      height: 50%;
     }
 
     button {
@@ -999,9 +1009,9 @@ $text-light: #9B9B9B;
 
 /* ADVENTURE MAP */
 
-// .map-container > div {
-//   height: calc(100vh - 100px) !important;
-// }
+.big-map-container > div {
+  height: calc(100vh - 100px) !important;
+}
 
 /* MEDIA QUERIES */
 @media (max-width: 900px) {
@@ -1029,20 +1039,24 @@ $text-light: #9B9B9B;
 }
 
 @media (max-width: 775px) {
+
   .modal-main {
     flex-direction: column;
     width: 85%;
 
     a.close-btn {
       color: #fff;
-      background-color: rgba(0, 0, 0, 0.76);
-      padding: 6px;
-      border-radius: 50%;
+      background-color: #292929;
+      padding: 5px 7px;
     }
 
     .modal-img {
       width: 100%;
       height: 47%;
+
+      img {
+        width: 100%;
+      }
     }
 
     .species-content {
@@ -1057,6 +1071,7 @@ $text-light: #9B9B9B;
 }
 
 @media (max-width: 570px) {
+
   .dropdown {
     flex-direction: column;
     height: auto;
@@ -1077,6 +1092,18 @@ $text-light: #9B9B9B;
     }
   }
 
+  .banner-wrapper {
+    width: 75%;
+
+    h1 {
+      font-size: 30px;
+    }
+
+    p {
+      font-size: 17px;
+    }
+  }
+
   .list-wrapper .list-item-wrapper {
     width: 100%;
   }
@@ -1088,10 +1115,68 @@ $text-light: #9B9B9B;
 
   .modal-main {
     width: 100%;
+    height: 100%;
   }
 
   .modal-main .modal-img {
     height: 33%;
+  }
+
+}
+
+@media (max-width: 475px) {
+
+  .header .nav-right {
+    display: none;
+  }
+
+  .adventure-overview {
+    
+    .map-box {
+      margin-bottom: 30px;
+    }
+
+    .species-box .species-box-content {
+      margin: 30px;
+    }
+
+  }
+
+  .description-box .description-box-content {
+    margin: 0 30px;
+  }
+
+}
+
+@media (max-width: 400px) {
+
+  .header .logo img {
+    width: 126px;
+    height: 45px;
+  }
+
+  .banner-wrapper {
+    width: 85%;
+
+    h1 {
+      font-size: 25px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .adventure-hero .adventure-title-wrapper {
+
+    h1 {
+      font-size: 30px;
+    }
+
+    h3 {
+      font-size: 17px;
+    }
+
   }
 
 }

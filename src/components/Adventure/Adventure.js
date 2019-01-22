@@ -88,7 +88,7 @@ class Adventure extends Component {
           }
           
           let adventureStyle = adventure ? {
-               background: `linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)),url('${adventure.images[0]}')`,
+               background: `linear-gradient(rgba(33, 41, 51, 0.55), rgba(8, 38, 75, 0.55)),url('${adventure.images[0]}')`,
                backgroundSize: "cover",
           } : null;
 

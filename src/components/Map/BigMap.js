@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 
 class BigMap extends Component {
@@ -6,9 +7,9 @@ class BigMap extends Component {
      constructor(props) {
           super(props);
           this.state = {
-               showingInfoWindow: false,  //Hides or the shows the infoWindow
-               activeMarker: {},          //Shows the active marker upon click
-               selectedPlace: {}      
+               showingInfoWindow: false, 
+               activeMarker: {},
+               selectedPlace: null
           }
      }
 
@@ -29,38 +30,63 @@ class BigMap extends Component {
      };
 
      render() {
-
+          const { selectedPlace } = this.state;
+          console.log(selectedPlace);
+          const { adventures } = this.props;
           const mapStyles = {
                width: "100%",
                height: "100%"
           };
-
+          
           return (
-               <div className="map-container">
+               <div className="big-map-container">
                     <Map
                          google={this.props.google}
-                         zoom={10}
+                         zoom={4}
                          style={mapStyles}
-                         initialCenter={{
-                              lat: 33.4484,
-                              lng: -112.0740
-                         }}
+                         initialCenter={{ lat: 39.8283, lng: -98.5795 }}
                     >
-                         <Marker
-                              onClick={this.onMarkerClick}
-                              name={'Kenyatta International Convention Centre'}
-                         />
+                         {
+                              adventures.map(adventure => {
+                                   const { id, location } = adventure;
+                                   return (
+                                        <Marker 
+                                             key={id}
+                                             position={{ lat: location.lat, lng: location.lng }}
+                                             onClick ={this.onMarkerClick}
+                                             adventure={adventure}
+                                        />
+                                   )
+                              })
+                         }
+                        
                          <InfoWindow
                               marker={this.state.activeMarker}
                               visible={this.state.showingInfoWindow}
                               onClose={this.onClose}
                          >
-                              <div><h4>{this.state.selectedPlace.name}</h4></div>
+                              <div>
+                                   {
+                                        selectedPlace ?
+                                        <a href={`/adventure/${selectedPlace.adventure.id}`} style={{textDecoration: "none", textTransform: "uppercase", color: "#292929", fontFamily: "Montserrat"}}>
+                                             <h4>{selectedPlace.adventure.title}</h4>
+                                        </a>
+                                        : null
+                                   }
+                              </div>
                          </InfoWindow>
                     </Map>
+                    
                </div>
           );
      }
 }
 
-export default GoogleApiWrapper({ apiKey: process.env.REACT_APP_MAP_KEY })(BigMap);
+function mapStateToProps(reduxState) {
+     const { adventures } = reduxState;
+     return { adventures };
+}
+
+const wrappedMap = GoogleApiWrapper({ apiKey: process.env.REACT_APP_MAP_KEY })(BigMap);
+export default connect(mapStateToProps)(wrappedMap);
+
