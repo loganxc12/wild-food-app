@@ -57,7 +57,7 @@ class AddSpeciesModal extends Component {
                               <a className="close-btn" onClick={this.modalClose}>X</a>
                               <header>
                                    <h2>ADD A NEW SPECIES</h2>
-                                   <button>+ Upload Featured Image</button>
+                                   {/* <button>+ Upload Featured Image</button> */}
                               </header>
                               <form>
                                    <input onChange={this.handleInputChange} name="name" value={name} placeholder="Common Name"></input>
