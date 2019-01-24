@@ -44,6 +44,20 @@ module.exports = {
                })
      },
 
+     updateAdventure: (req, res) => {
+          const { id } = req.params;
+          const { title, date, location, description, images, species } = req.body;
+          const dbInstance = req.app.get("db");
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.update_adventure([ id, user_id, title, date, location, description, images, species ])
+               .then(adventures => { res.status(200).send(adventures) })
+               .catch( error => {
+                    res.status(500).send({errorMessage: "Error in updateAdventure method"});
+                    console.log(error);
+               })
+     },
+
      readAdventures: (req, res) => {
           // if (!req.session.user) { res.send(); }
           const dbInstance = req.app.get("db");
@@ -66,7 +80,6 @@ module.exports = {
           const user_id = 1;
           dbInstance.read_single_adventure([ id, user_id ])
                .then(adventures => {
-                    console.log(adventures)
                     const { id } = adventures[0];
                     dbInstance.read_species_for_adventure([ id ])
                          .then(species => {
@@ -76,6 +89,19 @@ module.exports = {
                })
                .catch(error => {
                     res.status(500).send({errorMessage: "Error in readSingleAdventure method"});
+                    console.log(error);
+               })
+     },
+
+     deleteAdventure: (req, res) => {
+          const { id } = req.params;
+          const dbInstance = req.app.get("db");
+          // const { id } = req.session.user;
+          const user_id = 1;
+          dbInstance.delete_adventure([ id, user_id ])
+               .then(adventures => res.status(200).send(adventures))
+               .catch( error => {
+                    res.status(500).send({errorMessage: "Error in deleteAdventure method"});
                     console.log(error);
                })
      },
@@ -130,21 +156,7 @@ module.exports = {
                     res.status(500).send({errorMessage: "Error in deleteSpecies method"});
                     console.log(error);
                })
-     },
-
-     deleteAdventure: (req, res) => {
-          const { id } = req.params;
-          const dbInstance = req.app.get("db");
-          // const { id } = req.session.user;
-          const user_id = 1;
-          dbInstance.delete_adventure([ id, user_id ])
-               .then(adventures => res.status(200).send(adventures))
-               .catch( error => {
-                    res.status(500).send({errorMessage: "Error in deleteAdventure method"});
-                    console.log(error);
-               })
      }
-
 
 }
 

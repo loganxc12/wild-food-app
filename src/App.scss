@@ -561,10 +561,17 @@ $text-light: #9B9B9B;
       @extend %edit-box;
       right: 85px;
       margin-bottom: 5px;
-    }
 
-    .edit {
-      @extend %edit;
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        background-color: rgba(90, 210, 152, 0.555);
+        cursor: pointer;
+        text-decoration: none;
+        color: $dark;
+      }
     }
 
     .delete {

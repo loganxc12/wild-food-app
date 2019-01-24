@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { updateAdventures } from "../../ducks/reducer"; 
 import { confirmAlert } from "react-confirm-alert"; 
@@ -35,7 +35,6 @@ class Adventure extends Component {
 
      getSingleAdventureFromServer(id) {
           axios.get(`/api/adventures/${id}`).then(response => {
-               console.log(response);
                this.setState({
                     adventure: response.data.adventures[0],
                     species: response.data.species
@@ -146,7 +145,7 @@ class Adventure extends Component {
                     </div>
                     <div className="settings-box">
                          <div className="edit-delete-box">
-                              <div className="edit">EDIT</div>
+                              <Link to={`/adventure/edit/${adventure.id}`}><div className="edit">EDIT</div></Link>
                               <div onClick={() => this.confirmDelete(adventure.id)} className="delete">DELETE</div>
                          </div>
                          <i className="fas fa-cog"></i>
