@@ -405,7 +405,7 @@ $text-light: #9B9B9B;
       button {
         @extend %form-button;
         margin: 15px;
-        padding: 4px 25px;
+        padding: 8px 25px;
       }
 
       .date-picker {
@@ -734,7 +734,7 @@ $text-light: #9B9B9B;
 
   
   .modal-content {
-    // width: 100%;
+    width: 100%;
     margin: 25px 50px;
     margin-bottom: 33px;
     display: flex;
@@ -1076,6 +1076,7 @@ $text-light: #9B9B9B;
 
     .modal-content {
       height: 100%;
+      width: auto;
     }
   }
 

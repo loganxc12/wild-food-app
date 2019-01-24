@@ -74,7 +74,7 @@ class Adventure extends Component {
               },
               {
                 label: "No",
-                onClick: () => alert("Clicked No")
+                onClick: () => console.log("Clicked No")
               }
             ]
           })
