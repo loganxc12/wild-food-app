@@ -12,13 +12,13 @@ module.exports = {
                     const adventure = adventures[0];
                     //Get all species stored in db for user in session.
                     dbInstance.read_species([ user_id ])
-                         .then(allSpeciesInDb => {
-                              console.log("---allSpecies", allSpeciesInDb);
+                         .then(allSpecies => {
+                              console.log("---allSpecies", allSpecies);
                               //Loop over species array passed with Adventure (in req.body) and check each species 
                               //object against array of All species.
                               species.forEach(item => {
                                    const searchKey = item.scientific_name.toLowerCase();
-                                   const match = allSpeciesInDb.find(el => {
+                                   const match = allSpecies.find(el => {
                                         return el.scientific_name.toLowerCase() === searchKey;
                                    })
                                    //If there's a match (if species already exists for user), just create new line_items entry.
@@ -50,8 +50,62 @@ module.exports = {
           const dbInstance = req.app.get("db");
           // const { id } = req.session.user;
           const user_id = 1;
-          dbInstance.update_adventure([ id, user_id, title, date, location, description, images, species ])
-               .then(adventures => { res.status(200).send(adventures) })
+          //Update single adventure in adventures table.
+          dbInstance.update_adventure([ id, user_id, title, date, location, description, images ])
+               .then(adventures => { 
+                    console.log("---updated adventures", adventures);
+                    const adventure = adventures[0];
+                    //Read all line_items for updated adventure.
+                    dbInstance.read_line_items([ adventure.id, user_id ])
+                         .then(lineItems => {
+                              console.log("---line items", lineItems);
+                              console.log("----species array", species);
+                              //Loop over line_items array, and check if each species passed with Adventure has 
+                              //a line items entry connecting it to this adventure.
+                              lineItems.forEach(lineItem => {
+                                   const match = species.find(el => {
+                                        return el.id === lineItem.species_id
+                                   })
+                                   //If there's a match (if line_items entry exists), remove that species from array.
+                                   if (match) { 
+                                        species.splice(species.indexOf(match), 1)
+                                   } 
+                                   //If no match (if line_items entry exists but it doesn't match any updated species)
+                                   //that species is no longer connected to this adventure, so delete line_items entry.
+                                   else {
+                                        dbInstance.delete_line_item([ lineItem.id, user_id ])
+                                   }
+                              })
+                              console.log("----species array after loop", species);
+                              //Get all species stored in db for user in session.
+                              dbInstance.read_species([ user_id ])
+                                   .then(allSpecies => {
+                                        console.log("---allSpecies", allSpecies);
+                                        //Loop over species array passed with Adventure (in req.body) and check each species 
+                                        //object against array of All species.
+                                        species.forEach(item => {
+                                             const searchKey = item.scientific_name.toLowerCase();
+                                             const match = allSpecies.find(el => {
+                                                  return el.scientific_name.toLowerCase() === searchKey;
+                                             })
+                                             //If there's a match (if species already exists for user), just create new line_items entry.
+                                             if (match) {
+                                                  dbInstance.create_line_item([ match.id, adventure.id, user_id ])
+                                             }
+                                             //If no match, first create a new entry in the species table and then create a new line_items entry.
+                                             else {
+                                                  const { name, scientific_name, image_url, description } = item;
+                                                  dbInstance.create_species([ name, scientific_name, image_url, description, user_id ])
+                                                       .then(species => {
+                                                            console.log("---newlyCreatedSpecies", species);
+                                                            dbInstance.create_line_item([ species[0].id, adventure.id, user_id ])
+                                                       })
+                                             }
+                                        })
+                                   })
+                         })
+                    res.status(200).send(adventures) 
+               })
                .catch( error => {
                     res.status(500).send({errorMessage: "Error in updateAdventure method"});
                     console.log(error);

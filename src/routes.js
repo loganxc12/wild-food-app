@@ -20,3 +20,4 @@ export default (
           <Route path="/adventure/:id" component={Adventure} />
      </Switch>
 )
+

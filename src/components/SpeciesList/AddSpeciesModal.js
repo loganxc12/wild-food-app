@@ -19,6 +19,8 @@ class AddSpeciesModal extends Component {
           if (this.props.modalSpecies && (this.props !== prevProps)) {
                const { name, scientific_name, image_url, description } = this.props.modalSpecies;
                this.setState({ name, scientific_name, image_url, description });
+          } else if (!this.props.modalSpecies && (this.props !== prevProps)) {
+               this.resetState();
           }
      }
 
@@ -41,7 +43,7 @@ class AddSpeciesModal extends Component {
      modalSubmit() {
           const { name, scientific_name, image_url, description } = this.state;
           const { hide, addSpecies } = this.props;
-          addSpecies({ name, scientific_name, image_url, description } );
+          addSpecies(name, scientific_name, image_url, description);
           this.resetState();
           hide("showAddModal");
      }

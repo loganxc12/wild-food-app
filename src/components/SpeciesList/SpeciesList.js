@@ -18,7 +18,7 @@ class SpeciesList extends Component {
           this.hideModal = this.hideModal.bind(this);
      }
 
-     postSpeciesToServer({ name, scientific_name, image_url, description }) {
+     postSpeciesToServer(name, scientific_name, image_url, description) {
           const newSpecies = { name, scientific_name, image_url, description };
           axios.post("/api/species", newSpecies).then(response => {
                const { species, updateSpecies } = this.props;

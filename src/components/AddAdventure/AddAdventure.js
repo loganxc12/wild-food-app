@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { updateAdventures } from "../../ducks/reducer"; 
 import AddSpeciesModal from "../SpeciesList/AddSpeciesModal";
+import SpeciesModal from "../SpeciesList/SpeciesModal";
 import LocationModal from "./LocationModal";
 
 class AddAdventure extends Component {
@@ -20,6 +21,7 @@ class AddAdventure extends Component {
             species: [],
             redirect: false,
             showAddModal: false,
+            showSpeciesModal: false,
             showLocationModal: false,
             modalSpecies: null,
             modalIndex: 0
@@ -43,9 +45,7 @@ class AddAdventure extends Component {
 
     getSingleAdventureFromServer(id) {
         axios.get(`/api/adventures/${id}`).then(response => {
-            console.log(response);
             const { title, date, location, description, images } = response.data.adventures[0];
-            console.log(date.split("T")[0]);
             const { species } = response.data;
             this.setState({ title, date, location , description, images, species });
        })
@@ -72,6 +72,7 @@ class AddAdventure extends Component {
     }
 
    hideModal(modal) {
+       if (this.state.showSpeciesModal) { this.addUpdateSpeciesArray() };
         this.setState({ 
             [modal]: false,
             modalSpecies: null
@@ -91,8 +92,24 @@ class AddAdventure extends Component {
         })
     }
 
-    addUpdateSpeciesArray({ name, scientific_name, image_url, description }) {
-        if (this.state.modalSpecies) {
+    addUpdateSpeciesArray(name, scientific_name, image_url, description) {
+        //If triggered from Species Modal, replace that species in species array with updated species from Redux.
+        if (this.state.showSpeciesModal) {
+            this.setState(state => {
+                const species = state.species.map((el, i) => {
+                    if (i === state.modalIndex) {
+                        return this.props.species.filter(species => species.id === el.id)[0];
+                    } else {
+                        return el;
+                    }
+                });
+                return {
+                    species,
+                }
+            })
+        }
+        //If triggered from user editing new species in Add Modal, target and update that species in species array. 
+        else if (this.state.showAddModal && this.state.modalIndex) {
             this.setState(state => {
                 const species = state.species.map((el, i) => {
                     return (i === state.modalIndex) ? { name, scientific_name, image_url, description } : el;
@@ -101,7 +118,9 @@ class AddAdventure extends Component {
                     species,
                 }
             })
-        } else {
+        } 
+        //Otherwise simply add a new species to the species array in State.
+        else {
             this.setState({
                 species: [...this.state.species, { name, scientific_name, image_url, description }]
             })
@@ -127,16 +146,19 @@ class AddAdventure extends Component {
         const { title, date, location, description, images, species } = this.state;
         const updatedAdventure = { title, date, location, description, images, species };
         axios.put(`/api/adventures/${id}`, updatedAdventure).then(response => {
-            // this.setState({ redirect: true })
+            console.log("----Update Adventure response", response);
+            this.setState({ redirect: true });
         })
     }
 
     render() {
         const { id } = this.props.match.params;
-        const { title, date, location, description, imageUrl, images, species, showAddModal, showLocationModal, redirect, modalSpecies, modalIndex } = this.state;
+        const { title, date, location, description, imageUrl, images, species, showAddModal, showSpeciesModal, showLocationModal, redirect, modalSpecies, modalIndex } = this.state;
         const userSpecies = this.props.species ? this.props.species : [];
 
-        if (redirect) {
+        if (id && redirect) {
+            return <Redirect to={`/adventure/${id}`} />
+        } else if (redirect) {
             return <Redirect to="/dash" />;
         }
 
@@ -150,7 +172,11 @@ class AddAdventure extends Component {
 
         const previewSpecies = species.map( (species, i) => 
             <li key={i}>
-                <span onClick={() => this.showModal("showAddModal", species, i)}>{species.name.toUpperCase()}</span> <button onClick={() => this.deleteFromArray("species", i)} className="delete-circle">X</button>
+                <span 
+                    onClick={species.id ? () => this.showModal("showSpeciesModal", species, i) : () => this.showModal("showAddModal", species, i)}
+                    >{species.name.toUpperCase()}
+                </span> 
+                <button onClick={() => this.deleteFromArray("species", i)} className="delete-circle">X</button>
             </li>
         );
 
@@ -171,6 +197,11 @@ class AddAdventure extends Component {
                     addSpecies={this.addUpdateSpeciesArray}
                     modalSpecies={modalSpecies}
                     modalIndex={modalIndex}
+                />
+                <SpeciesModal 
+                    show={showSpeciesModal}
+                    hide={this.hideModal}
+                    modalSpecies={modalSpecies}
                 />
                 <div className="add-adventure-form">
                     { id ? <h1>EDIT YOUR ADVENTURE</h1> : <h1>ADD A NEW ADVENTURE</h1> }
@@ -215,7 +246,9 @@ class AddAdventure extends Component {
                     <textarea rows="12" cols="70" onChange={this.handleInputChange} name="description" value={description} placeholder="Write to your heart’s content about this foraging trip: where you went, what you found, essential gear you packed, new species you learned or discovered for the first time…"></textarea>
                     <div className="adventure-submit">
                         <button 
-                            onClick={ (title && location && date && description && images.length && species.length) ? 
+                            onClick={ (id && title && location && date && description && images.length && species.length) ? 
+                                () => this.updateAdventureOnServer(id)
+                                : (title && location && date && description && images.length && species.length) ? 
                                 this.postAdventureToServer : () => alert("Please fill out all fields to add a new adventure") } 
                         > SAVE ADVENTURE
                         </button>
