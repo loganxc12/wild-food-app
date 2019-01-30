@@ -6,6 +6,7 @@ import AddSpeciesModal from "./AddSpeciesModal";
 import SpeciesModal from "./SpeciesModal";
 
 class SpeciesList extends Component {
+
      constructor(props) {
           super(props);
           this.state = {
@@ -18,7 +19,7 @@ class SpeciesList extends Component {
           this.hideModal = this.hideModal.bind(this);
      }
 
-     postSpeciesToServer(name, scientific_name, image_url, description) {
+     postSpeciesToServer({name, scientific_name, image_url, description}) {
           const newSpecies = { name, scientific_name, image_url, description };
           axios.post("/api/species", newSpecies).then(response => {
                const { species, updateSpecies } = this.props;
@@ -38,10 +39,8 @@ class SpeciesList extends Component {
      }
 
      render() {
-          //Pulling down species array from Redux and mapping over/conditionally rendering.
           const { showAddModal, showSpeciesModal, modalSpecies } = this.state;
           const { species } = this.props;
-
           let speciesToDisplay;
 
           if (species !== null) {
@@ -49,7 +48,7 @@ class SpeciesList extends Component {
                     speciesToDisplay = species.map(species => {
                          let speciesStyle = {
                               background: `linear-gradient(rgba(33, 41, 51, 0.55), rgba(8, 38, 75, 0.55)),url('${species.image_url}')`,
-                              backgroundSize: "cover",
+                              backgroundSize: "cover"
                          }
                          return (
                               <div key={species.id} className="list-item-wrapper">
@@ -62,7 +61,7 @@ class SpeciesList extends Component {
                               </div> 
                          );
                     });
-               } else { speciesToDisplay = <h3>Looks like you haven't added any species yet.</h3> }
+               } else { speciesToDisplay = <h3>Looks like you haven't added any <strong>Species</strong> yet. Click the plus symbol to add your first wild food!</h3> }
           } else { speciesToDisplay = <h3>Loading...</h3> }
 
           return (
@@ -78,11 +77,11 @@ class SpeciesList extends Component {
                          modalSpecies={modalSpecies}
                     />
                     { speciesToDisplay }
-                    <i onClick={ () => this.showModal("showAddModal")} className="fas fa-plus-circle"></i>
+                    <i onClick={ () => this.showModal("showAddModal") } className="fas fa-plus-circle"></i>
                </div>
           );
-     }
-     
+     } 
+      
 }
 
 function mapStateToProps(reduxState) {

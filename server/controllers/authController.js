@@ -15,7 +15,6 @@ module.exports = {
           function tradeCodeForAccessToken() {
                return axios.post(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/oauth/token`, payload);
           };
-
           //RECIEVE ACCESS TOKEN AND SEND BACK TO AUTH0 TO GET USER INFO.
           function tradeAccessTokenForUserInfo(accessTokenResponse) {
                const accessToken = accessTokenResponse.data.access_token;
@@ -53,8 +52,8 @@ module.exports = {
                .then(tradeAccessTokenForUserInfo)
                .then(storeUserInfoInDatabase)
                .catch(error => {
-                    console.log('error in /auth/callback', error);
-                    res.status(500).send('Something went wrong on the server');
+                    console.log("error in /auth/callback", error);
+                    res.status(500).send("Something went wrong on the server");
                })
 
      },

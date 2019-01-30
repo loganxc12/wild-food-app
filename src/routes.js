@@ -19,5 +19,5 @@ export default (
           <Route path="/adventure/edit/:id" component={AddAdventure} />
           <Route path="/adventure/:id" component={Adventure} />
      </Switch>
-)
+);
 

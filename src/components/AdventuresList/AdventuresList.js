@@ -32,7 +32,7 @@ class AdventuresList extends Component {
                               </div>
                          );
                     });
-               } else { adventuresToDisplay = <h3>Looks like you haven't added any adventures yet.</h3> }
+               } else { adventuresToDisplay = <h3>Looks like you haven't added any <strong>Adventures</strong> yet. Click the plus symbol to catalog your latest foraging trip!</h3> }
           } else { adventuresToDisplay = <h3>Loading...</h3> }
          
           return (

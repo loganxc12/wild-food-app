@@ -13,14 +13,14 @@ class BigMap extends Component {
           }
      }
 
-     onMarkerClick = (props, marker, e) =>
+     onMarkerClick = (props, marker) =>
           this.setState({
                selectedPlace: props,
                activeMarker: marker,
                showingInfoWindow: true
           });
 
-     onClose = props => {
+     onClose = () => {
           if (this.state.showingInfoWindow) {
                this.setState({
                     showingInfoWindow: false,
@@ -31,7 +31,6 @@ class BigMap extends Component {
 
      render() {
           const { selectedPlace } = this.state;
-          console.log(selectedPlace);
           const { adventures } = this.props;
           const mapStyles = {
                width: "100%",
@@ -47,17 +46,18 @@ class BigMap extends Component {
                          initialCenter={{ lat: 39.8283, lng: -98.5795 }}
                     >
                          {
+                              adventures ?
                               adventures.map(adventure => {
-                                   const { id, location } = adventure;
                                    return (
                                         <Marker 
-                                             key={id}
-                                             position={{ lat: location.lat, lng: location.lng }}
-                                             onClick ={this.onMarkerClick}
+                                             key={adventure.id}
+                                             position={{ lat: adventure.location.lat, lng: adventure.location.lng }}
+                                             onClick={this.onMarkerClick}
                                              adventure={adventure}
                                         />
-                                   )
+                                   );
                               })
+                              : null
                          }
                         
                          <InfoWindow
@@ -68,8 +68,8 @@ class BigMap extends Component {
                               <div>
                                    {
                                         selectedPlace ?
-                                        <a href={`/adventure/${selectedPlace.adventure.id}`} style={{textDecoration: "none", textTransform: "uppercase", color: "#292929", fontFamily: "Montserrat"}}>
-                                             <h4>{selectedPlace.adventure.title}</h4>
+                                        <a href={`/adventure/${selectedPlace.adventure.id}`} style={{textTransform: "uppercase", color: "#292929", fontFamily: "Montserrat"}}>
+                                             {selectedPlace.adventure.title} 
                                         </a>
                                         : null
                                    }

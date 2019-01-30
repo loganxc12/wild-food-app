@@ -35,6 +35,7 @@ class Adventure extends Component {
 
      getSingleAdventureFromServer(id) {
           axios.get(`/api/adventures/${id}`).then(response => {
+            console.log("----single adventure", response);
                this.setState({
                     adventure: response.data.adventures[0],
                     species: response.data.species

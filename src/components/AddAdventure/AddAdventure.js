@@ -72,7 +72,7 @@ class AddAdventure extends Component {
     }
 
    hideModal(modal) {
-       if (this.state.showSpeciesModal) { this.addUpdateSpeciesArray() };
+       if (this.state.showSpeciesModal) { this.addUpdateSpeciesArray({}) };
         this.setState({ 
             [modal]: false,
             modalSpecies: null
@@ -92,7 +92,7 @@ class AddAdventure extends Component {
         })
     }
 
-    addUpdateSpeciesArray(name, scientific_name, image_url, description) {
+    addUpdateSpeciesArray({id, name, scientific_name, image_url, description}) {
         //If triggered from Species Modal, replace that species in species array with updated species from Redux.
         if (this.state.showSpeciesModal) {
             this.setState(state => {
@@ -122,8 +122,8 @@ class AddAdventure extends Component {
         //Otherwise simply add a new species to the species array in State.
         else {
             this.setState({
-                species: [...this.state.species, { name, scientific_name, image_url, description }]
-            })
+                species: [...this.state.species, { id, name, scientific_name, image_url, description }]
+            })   
         }    
     }
 

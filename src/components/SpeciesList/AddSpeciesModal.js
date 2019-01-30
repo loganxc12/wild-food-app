@@ -43,14 +43,14 @@ class AddSpeciesModal extends Component {
      modalSubmit() {
           const { name, scientific_name, image_url, description } = this.state;
           const { hide, addSpecies } = this.props;
-          addSpecies(name, scientific_name, image_url, description);
+          addSpecies({name, scientific_name, image_url, description});
           this.resetState();
           hide("showAddModal");
      }
 
      render() {
           const { name, scientific_name, image_url, description } = this.state;
-          const { show, hide } = this.props;
+          const { show } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
           return show ? (
                <div className={showHideClassName}>

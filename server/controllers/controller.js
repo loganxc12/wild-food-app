@@ -46,7 +46,8 @@ module.exports = {
 
      updateAdventure: (req, res) => {
           const { id } = req.params;
-          const { title, date, location, description, images, species } = req.body;
+          const { title, date, location, description, images } = req.body;
+          let { species } = req.body;
           const dbInstance = req.app.get("db");
           // const { id } = req.session.user;
           const user_id = 1;
@@ -68,7 +69,7 @@ module.exports = {
                                    })
                                    //If there's a match (if line_items entry exists), remove that species from array.
                                    if (match) { 
-                                        species.splice(species.indexOf(match), 1)
+                                        species = species.filter(el => el.id !== match.id);
                                    } 
                                    //If no match (if line_items entry exists but it doesn't match any updated species)
                                    //that species is no longer connected to this adventure, so delete line_items entry.

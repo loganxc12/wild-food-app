@@ -140,10 +140,9 @@ class SpeciesModal extends Component {
                          </section>
                     </div>
                )
-          } else {
-               return null;
-          }
-          
+          } else { 
+            return null; 
+          }   
      }
      
 }

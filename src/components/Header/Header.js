@@ -10,7 +10,7 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dropdown: true
+            dropdown: false
         }
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
@@ -102,14 +102,12 @@ class Header extends Component {
             </div>
         );
         
-        return dropdown ? (
+        return (
             <div className="header-wrapper">
                 { header }
-                <Dropdown /> 
+                { dropdown && <Dropdown /> }
             </div>
-        ) :  <div className="header-wrapper">
-                { header } 
-            </div>
+        ); 
     }
      
 }

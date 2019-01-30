@@ -7,21 +7,17 @@ const INITIAL_STATE = {
 
 //REDUCER
 function reducer(state = INITIAL_STATE, action) {
+     
      console.log("REDUCER HIT!");
 
      switch(action.type) {
-
           case UPDATE_USER_DATA: 
                return Object.assign( {}, state, {user: action.payload} );
-
           case UPDATE_ADVENTURES: 
                return Object.assign( {}, state, {adventures: action.payload} );
-          
           case UPDATE_SPECIES: 
                return Object.assign( {}, state, {species: action.payload} );
-          
           default: return state;
-
      }
 
 }

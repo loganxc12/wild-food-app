@@ -289,6 +289,14 @@ $text-light: #9B9B9B;
   flex-wrap: wrap;
   position: relative;
 
+  h3 {
+    font-family: $heading-font;
+    text-align: center;
+    margin: 30px auto;
+    padding: 0 40px;
+    font-weight: 400;
+  }
+
   i {
     position: fixed; 
     bottom: 50px;
@@ -590,7 +598,6 @@ $text-light: #9B9B9B;
   @extend %hero;
   position: relative;
   justify-content: center;
-  background-image: linear-gradient(rgba(33, 41, 51, 0.65), rgba(8, 38, 75, 0.65)), url("./images/maidens-cliff-fall.jpg");
 
   .adventure-title-wrapper {
     display: flex;
