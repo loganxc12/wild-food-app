@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { updateAdventures } from "../../ducks/reducer"; 
@@ -71,13 +71,13 @@ class AddAdventure extends Component {
         })
     }
 
-   hideModal(modal) {
-       if (this.state.showSpeciesModal) { this.addUpdateSpeciesArray({}) };
-        this.setState({ 
-            [modal]: false,
-            modalSpecies: null
-        })
-   }
+	hideModal(modal) {
+		if (this.state.showSpeciesModal) { this.addUpdateSpeciesArray({}) };
+		this.setState({ 
+			[modal]: false,
+			modalSpecies: null
+		})
+	}
 
     resetSelectBox = () => {
         const selectBox = this.refs.selectBox;
@@ -257,13 +257,13 @@ class AddAdventure extends Component {
                 <div className="footer"></div>
             </div>
         );
-     }
+    }
 
 }
 
 function mapStateToProps(reduxState) {
-     const { user, species, adventures } = reduxState;
-     return { user, species, adventures };
+	const { user, species, adventures } = reduxState;
+	return { user, species, adventures };
 }
 
 export default connect(mapStateToProps, { updateAdventures })(AddAdventure);

@@ -18,7 +18,7 @@ class ImageSlider extends Component {
      goToNextSlide = (e) => {
           e.stopPropagation();
           if (this.state.currentIndex === this.props.images.length - 1) {
-               return this.setState({ currentIndex: 0 })
+               return this.setState({ currentIndex: 0 });
           }
           this.setState(prevState => ({
                currentIndex: prevState.currentIndex + 1
@@ -35,11 +35,11 @@ class ImageSlider extends Component {
           }));
      }
 
-     render () {
+     render() {
           const { currentIndex } = this.state;
           const { show, images } = this.props;
           const showHideClassName = show ? "modal display-flex" : "modal display-none";
-          const imageSlides = images.map((image, i) => <Slide key={i} image={image}/> );
+          const imageSlides = images.map((image, i) => <Slide key={i} image={image} /> );
 
           return show ? (
                <div className={showHideClassName} name="modal" onClick={this.handleClose}>

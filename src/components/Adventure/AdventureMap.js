@@ -1,33 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
-class AdventureMap extends Component {
+function AdventureMap(props) {
 
-     render() {
-
-          const { lat, lng } = this.props.location;
-
-          const mapStyles = {
-               width: "100%",
-               height: "100%"
-          };
+          const { lat, lng } = props.location;
+          const mapStyles = { width: "100%", height: "100%" };
 
           return (
                <div className="map-container">
                     <Map
-                         google={this.props.google}
+                         google={props.google}
                          zoom={11}
                          style={mapStyles}
                          initialCenter={{ lat, lng }}
                          center={{ lat, lng }}
                     >
-                         <Marker
-                              position={{ lat, lng }}
-                         />
+                         <Marker position={{ lat, lng }} />
                     </Map>
                </div>
           );
-     }
 }
 
 export default GoogleApiWrapper({ apiKey: process.env.REACT_APP_MAP_KEY })(AdventureMap);
