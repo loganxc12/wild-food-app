@@ -47,8 +47,8 @@ class AddAdventure extends Component {
         axios.get(`/api/adventures/${id}`).then(response => {
             const { title, date, location, description, images } = response.data.adventures[0];
             const { species } = response.data;
-            this.setState({ title, date, location , description, images, species });
-       })
+            this.setState({ title, date, location, description, images, species });
+        })
     }
 
     handleInputChange(e) {

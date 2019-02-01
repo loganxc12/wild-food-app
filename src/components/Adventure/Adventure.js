@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { updateAdventures } from "../../ducks/reducer"; 
+import { updateAdventures, updateSpecies } from "../../ducks/reducer"; 
 import { confirmAlert } from "react-confirm-alert"; 
 import "react-confirm-alert/src/react-confirm-alert.css"; 
 import SpeciesModal from "../SpeciesList/SpeciesModal";
@@ -29,6 +29,9 @@ class Adventure extends Component {
 	}
 
 	componentDidMount() {
+		axios.get("/api/species").then(response => {
+            this.props.updateSpecies(response.data);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+        })
 		const { id } = this.props.match.params;
 		this.getSingleAdventureFromServer(id);
 	}
@@ -50,7 +53,7 @@ class Adventure extends Component {
 	}
 
 	hideModal(modal) {
-		this.setState({ [modal]: false})
+		this.setState({ [modal]: false })
 	}
 
 	deleteAdventureFromServer(id) {
@@ -158,4 +161,4 @@ class Adventure extends Component {
      
 }
 
-export default connect(null, { updateAdventures })(Adventure);
+export default connect(null, { updateAdventures, updateSpecies })(Adventure);

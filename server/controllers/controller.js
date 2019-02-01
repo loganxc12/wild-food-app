@@ -103,9 +103,9 @@ module.exports = {
                                             })
                                     }
                                 })
+                                res.status(200).send(adventures); 
                             })
                     })
-                res.status(200).send(adventures) 
             })
             .catch( error => {
                 res.status(500).send({errorMessage: "Error in updateAdventure method"});
@@ -138,7 +138,7 @@ module.exports = {
                 const { id } = adventures[0];
                 dbInstance.read_species_for_adventure([ id ])
                     .then(species => {
-                        console.log(species);
+                        console.log("---Species for adventure", species);
                         res.status(200).send({ adventures, species });
                     })
             })
