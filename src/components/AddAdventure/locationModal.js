@@ -29,6 +29,7 @@ class LocationModal extends Component {
     }
 
     setLocation(place) {
+        console.log(place);
         let location = Object.assign({}, this.state.location);
         location.lat = place.geometry.location.lat();
         location.lng = place.geometry.location.lng();
@@ -59,7 +60,7 @@ class LocationModal extends Component {
                             <Autocomplete
                                 style={{width: '90%'}}
                                 onPlaceSelected={this.setLocation}
-                                types={['(regions)']}
+                                types={['geocode']}
                             />
                         </header>
                         <div className="location-picker">
